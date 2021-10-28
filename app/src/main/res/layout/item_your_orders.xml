@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.solbios.model.userOrder.Data" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/yourOrderRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin16"
+        android:background="@drawable/ic_bottom_drawable">
+
+        <ImageView
+            android:id="@+id/orderSuccessImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="@dimen/margin8"
+            android:src="@drawable/check" />
+
+        <TextView
+            android:id="@+id/orderDeliveredTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:layout_toEndOf="@id/orderSuccessImageView"
+            android:fontFamily="@font/p_bold"
+            android:text="@{viewModel.current_status.title}"
+            android:textColor="@color/green"
+            android:textSize="@dimen/textSize18" />
+
+        <View
+            android:id="@+id/backgroundView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/orderSuccessImageView"
+            android:layout_marginTop="@dimen/margin16"
+            android:background="@color/gray" />
+
+        <TextView
+            android:id="@+id/orderIdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/backgroundView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:drawableStart="@drawable/box"
+            android:drawablePadding="@dimen/margin5"
+            android:fontFamily="@font/p_bold"
+            android:gravity="center"
+            android:text="@string/order_id" />
+
+        <TextView
+            android:id="@+id/orderIdValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/backgroundView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:drawablePadding="@dimen/margin5"
+            android:fontFamily="@font/p_bold"
+            android:gravity="center"
+            android:text="@{viewModel.order_id}" />
+
+        <TextView
+            android:id="@+id/orderDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderIdTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:drawableStart="@drawable/calender"
+            android:drawablePadding="@dimen/margin5"
+            android:fontFamily="@font/p_bold"
+            android:gravity="center"
+            android:text="@string/order_date" />
+        <TextView
+            android:id="@+id/orderDateValueTextView"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@{viewModel.format_created_at}"
+           android:layout_margin="@dimen/margin8"
+           android:fontFamily="@font/p_bold"
+           android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="@dimen/margin5"
+           android:layout_below="@id/orderIdTextView"/>
+
+        <TextView
+            android:id="@+id/AmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDateTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:drawablePadding="@dimen/margin5"
+            android:fontFamily="@font/p_bold"
+            android:gravity="center"
+            android:text="@string/amount" />
+        <TextView
+            android:id="@+id/tabletNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDateTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
+            android:drawablePadding="@dimen/margin5"
+            android:gravity="center"
+            android:layout_toEndOf="@id/AmountTextView"
+            android:text="@{@string/Rs+String.valueOf(viewModel.total_amount)}" />
+        <TextView
+            android:id="@+id/tabletQuantityTextView"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="(3more)"
+           android:layout_margin="@dimen/margin8"
+           android:fontFamily="@font/p_bold"
+           android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="@dimen/margin5"
+           android:layout_below="@id/orderDateTextView"/>
+
+        <View
+            android:id="@+id/backgroundView1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/tabletNameTextView"
+            android:layout_marginTop="@dimen/margin8"
+            android:background="@color/gray" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reorder"
+            android:visibility="gone"
+            android:textColor="#AC0B0B"
+            android:layout_below="@id/backgroundView1"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/p_bold"
+            android:textSize="@dimen/textSize16"
+            android:layout_margin="@dimen/margin16"/>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="packetSize"
+            type="com.solbios.model.productDetails.PacketSize" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/unitPacketTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin8"
+            android:background="@drawable/ic_packet_size_drawable"
+            android:fontFamily="@font/p_bold"
+            android:padding="@dimen/margin8"
+            android:text="@{packetSize.pack_size}"
+            android:textSize="@dimen/textSize12"
+            android:textColor="@color/purple_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

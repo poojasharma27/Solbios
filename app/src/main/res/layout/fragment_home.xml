@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+          name="viewModel"
+          type="com.solbios.ui.viewModel.home.HomeViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <include
+        layout="@layout/layout_toolbar"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="150dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/margin48">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+             <EditText
+                 android:id="@+id/searchViewEditText"
+                 android:layout_width="match_parent"
+                 android:layout_height="40dp"
+                 android:fontFamily="@font/p_regular"
+                 android:layout_margin="@dimen/margin16"
+                 android:hint="@string/search_medicin"
+                 android:ellipsize="start"
+                 android:focusable="false"
+                 android:onClick="@{(view) ->viewModel.searchOnClick(view)}"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:drawableEnd="@drawable/ic_baseline_search_24"
+                 android:background="@drawable/rectangle"/>
+
+           <!-- <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin16"
+                android:background="@drawable/rectangle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:queryHint="@string/search_medicin" />
+-->
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="230dp"
+                android:layout_marginStart="@dimen/margin16"
+                android:layout_marginTop="@dimen/margin8"
+                android:layout_marginEnd="@dimen/margin16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchViewEditText" />
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:padding="5dip"
+                app:centered="true"
+                app:fillColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pager"
+                app:pageColor="@color/purple_200"
+                app:snap="false" />
+
+            <View
+                android:id="@+id/indicatorView"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/gray"
+                app:layout_constraintTop_toBottomOf="@id/indicator" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/indicatorView">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/indicatorView">
+
+                    <TextView
+                        android:id="@+id/popularCategoriesTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin16"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/p_bold"
+                        android:text="@string/popular_categories"
+                        android:textColor="#5E5454"
+                        android:textSize="@dimen/textSize18" />
+
+                    <TextView
+                        android:id="@+id/popularCategoriesSeeAllTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="@dimen/margin16"
+                        android:fontFamily="@font/p_bold"
+                        android:text="@string/see_all"
+                        android:visibility="gone"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize12" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularCategoriesRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/popularCategoriesTextView"
+                        android:layout_marginTop="@dimen/margin16"
+                        android:layout_marginBottom="@dimen/margin16"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:spanCount="3" />
+
+                    <View
+                        android:id="@+id/popularCategoriesView"
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:layout_below="@id/popularCategoriesRecyclerView"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/brandTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/popularCategoriesView"
+                        android:layout_marginStart="@dimen/margin16"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/p_bold"
+                        android:text="@string/brands"
+                        android:textColor="#5E5454"
+                        android:textSize="@dimen/textSize18"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/brandSeeAllTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/popularCategoriesView"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="@dimen/margin16"
+                        android:fontFamily="@font/p_bold"
+                        android:text="@string/see_all"
+                        android:visibility="gone"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize12"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/brandsRecyclerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/brandTextView"
+                        android:layout_marginTop="@dimen/margin16"
+                        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:spanCount="3" />
+                </RelativeLayout>
+            </ScrollView>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

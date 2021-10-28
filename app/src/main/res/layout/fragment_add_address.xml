@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+   <variable
+       name="viewModel"
+       type="com.solbios.ui.viewModel.home.address.AddAddressViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <include
+            layout="@layout/layout_toolbar_name"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="100dp"
+            android:clipToPadding="false"
+            android:layout_marginTop="@dimen/margin48"
+            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FAFAFA"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+            android:layout_marginBottom="@dimen/margin24"
+           app:layout_constraintTop_toTopOf="parent">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/p_regular"
+                android:hint="@string/full_name"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.fullName}"
+                 />
+
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addressTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+                android:layout_marginTop="@dimen/margin24"
+            android:layout_marginBottom="@dimen/margin24"
+           app:layout_constraintTop_toBottomOf="@id/nameTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addressTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/p_regular"
+                android:hint="@string/address"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.home}"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/numberTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin24"
+                app:layout_constraintTop_toBottomOf="@id/addressTextInputLayout"
+                app:prefixText="+91">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/p_regular"
+                    android:hint="@string/enter_10_digit_mobile_number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:text="@={viewModel.mobile}"
+
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+       <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pinCodeTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+                android:layout_marginTop="@dimen/margin24"
+            android:layout_marginBottom="@dimen/margin24"
+           app:layout_constraintTop_toBottomOf="@id/numberTextInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pinCodeTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/p_regular"
+                android:hint="@string/pinCode"
+                android:maxLength="6"
+                android:text="@={viewModel.pinCode}"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+  <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cityTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+                android:layout_marginTop="@dimen/margin24"
+            android:layout_marginBottom="@dimen/margin24"
+           app:layout_constraintTop_toBottomOf="@id/pinCodeTextInputLayout">
+      <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/cityTextInputEditText"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:fontFamily="@font/p_regular"
+          android:hint="@string/city"
+          android:inputType="textPersonName"
+          android:text="@={viewModel.city}" />
+
+  </com.google.android.material.textfield.TextInputLayout>
+      <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/stateTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+                android:layout_marginTop="@dimen/margin24"
+            android:layout_marginBottom="@dimen/margin24"
+           app:layout_constraintTop_toBottomOf="@id/cityTextInputLayout">
+
+          <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/stateTextInputEditText"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fontFamily="@font/p_regular"
+              android:hint="@string/state"
+              android:inputType="textPersonName"
+              android:text="@={viewModel.state}" />
+      </com.google.android.material.textfield.TextInputLayout>
+            <RadioGroup
+                android:id="@+id/addressTypeRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/margin24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stateTextInputLayout">
+
+            <RadioButton
+                android:id="@+id/homeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/home" />
+
+            <RadioButton
+                android:id="@+id/officeRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/office" />
+
+            <RadioButton
+                android:id="@+id/otherRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/other" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin24"
+                android:layout_marginEnd="@dimen/margin24"
+                android:layout_marginTop="@dimen/margin24"
+                android:text="@string/save"
+                app:layout_constraintTop_toBottomOf="@id/addressTypeRadioGroup"
+                android:padding="@dimen/margin8"
+                android:textSize="@dimen/textSize18"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

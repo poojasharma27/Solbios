@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.solbios.ui.viewModel.home.ProductViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/layout_toolbar_with_search"
+            tools:layout_editor_absoluteX="205dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <RelativeLayout
+            android:id="@+id/childRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin48"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/sortByImageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/margin16"
+                android:src="@drawable/sort" />
+
+            <TextView
+                android:id="@+id/sortTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin16"
+                android:layout_toEndOf="@id/sortByImageView"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/sort_by"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize12"
+
+                app:layout_constraintStart_toEndOf="@id/sortByImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/relevanceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_toRightOf="@id/sortTextView"
+                android:fontFamily="@font/p_regular"
+                android:text="Relevance"
+                android:textSize="@dimen/textSize12"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/sortTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/horizontalView"
+                android:layout_width="2dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/gray"
+
+                />
+
+            <ImageView
+                android:id="@+id/filterImageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="@dimen/margin24"
+                android:layout_toRightOf="@id/horizontalView"
+                android:src="@drawable/filter" />
+
+            <TextView
+                android:id="@+id/filterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin16"
+                android:layout_toRightOf="@id/filterImageView"
+                android:fontFamily="@font/p_bold"
+                android:text="Filter"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize12" />
+
+            <TextView
+                android:id="@+id/filterSelectTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_toRightOf="@id/filterTextView"
+                android:fontFamily="@font/p_regular"
+                android:text="Relevance"
+                android:textSize="@dimen/textSize12"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/sortTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="150dp"
+            android:clipToPadding="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/childRelativeLayout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/allProductTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin8"
+                    android:layout_marginTop="@dimen/margin16"
+                    android:fontFamily="@font/p_bold"
+                    android:text="All Products"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize12" />
+
+                <TextView
+                    android:id="@+id/allProductDeatilsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/allProductTextView"
+                    android:layout_marginStart="@dimen/margin8"
+                    android:fontFamily="@font/p_regular"
+                    android:text="@string/_0_products_available"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/allProductTextView" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/productListRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/allProductDeatilsTextView"
+                    android:layout_marginTop="@dimen/margin16"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@+id/allProductDeatilsTextView" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}" />
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/noProductImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/noproduct"
+            android:visibility="@{viewModel.noProduct?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

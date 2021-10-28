@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/backArrowImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginEnd="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:background="@drawable/ic_baseline_keyboard_backspace_24" />
+
+    <EditText
+        android:id="@+id/searchViewEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin8"
+        android:layout_marginEnd="@dimen/margin8"
+        android:layout_marginTop="@dimen/margin8"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_toEndOf="@id/backArrowImageView"
+        android:background="@null"
+        android:drawableEnd="@drawable/ic_baseline_search_24"
+        android:ellipsize="start"
+        android:fontFamily="@font/p_regular"
+        android:hint="@string/search_medicin"
+        android:singleLine="true" />
+
+
+</RelativeLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.solbios.model.orderDetails.Product" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_bottom_drawable"
+        android:layout_marginBottom="@dimen/margin8"
+        android:layout_marginStart="@dimen/margin16"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginTop="@dimen/margin8">
+
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/p_bold"
+            android:text="@{viewModel.product_detail.title}"
+            android:layout_margin="@dimen/margin8"
+        />
+        <TextView
+            android:id="@+id/subTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin8"
+            android:layout_below="@id/titleTextView"
+            android:text="@{@string/Qty+String.valueOf(viewModel.quantity)}"
+           />
+
+        <TextView
+            android:id="@+id/salePriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/margin8"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/mrpTextView"
+            android:layout_below="@id/salePriceTextView"
+            android:fontFamily="@font/p_bold"
+            android:text="MRP"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/margin8"
+            android:textSize="@dimen/textSize12"
+
+            />
+        <TextView
+            android:id="@+id/mrpTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/margin8"
+            android:text=""
+            android:textSize="@dimen/textSize12"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</layout>

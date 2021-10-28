@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+      <variable
+          name="viewModel"
+          type="com.solbios.model.cart.GetProduct" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/productTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin16"
+            android:fontFamily="@font/p_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/salePriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin16"
+            android:text=" "
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16"
+            android:textStyle="bold" />
+    <!-- android:text="@{@string/Rs+viewModel.sales_price}-->
+
+        <TextView
+            android:id="@+id/weightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.sub_title}"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_regular"
+            android:layout_below="@id/productTextView"
+            android:textSize="@dimen/textSize12" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/mrpTextView"
+            android:layout_below="@id/salePriceTextView"
+            android:fontFamily="@font/p_bold"
+            android:text="MRP"
+            android:layout_marginEnd="3dp"
+            android:layout_marginTop="@dimen/margin8"
+            android:textSize="@dimen/textSize12"
+
+            />
+        <TextView
+            android:id="@+id/mrpTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/productTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:text="@{@string/Rs+viewModel.price}"
+            android:textSize="@dimen/textSize12"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/removeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weightTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold"
+            android:text="@string/remove" />
+
+        <LinearLayout
+            android:id="@+id/plusMinusLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/mrpTextView">
+
+            <ImageView
+                android:id="@+id/minusImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:src="@drawable/ic_baseline_indeterminate_check_box_24" />
+
+            <TextView
+                android:id="@+id/countTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/p_bold"
+                android:text="0"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical|center" />
+
+            <ImageView
+                android:id="@+id/plusImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:src="@drawable/ic_baseline_add_box_24" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_below="@id/plusMinusLinearLayout"/>
+    </RelativeLayout>
+</layout>

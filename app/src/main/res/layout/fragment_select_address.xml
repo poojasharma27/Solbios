@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.solbios.ui.viewModel.home.address.SelectAddressViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/layout_toolbar_name"/>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="@dimen/margin48"
+    app:layout_constraintStart_toStartOf="parent">
+
+  <TextView
+      android:id="@+id/yourShippingAddressTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/your_shipping_addresses"
+      app:layout_constraintTop_toTopOf="parent"
+      android:textSize="@dimen/textSize18"
+      android:textColor="@color/black"
+      android:layout_marginTop="@dimen/margin16"
+      android:layout_marginStart="@dimen/margin16"
+      app:layout_constraintStart_toStartOf="parent"
+      android:fontFamily="@font/p_regular"/>
+  <TextView
+      android:id="@+id/addNewTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/add_new"
+      app:layout_constraintTop_toTopOf="parent"
+      android:textSize="@dimen/textSize14"
+      android:textColor="#B30B0B"
+      android:layout_marginEnd="@dimen/margin16"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginTop="20dp"
+      android:fontFamily="@font/p_bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selectAddressRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/yourShippingAddressTextView"
+        android:layout_marginTop="@dimen/margin16"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/margin16"
+        android:layout_marginBottom="@dimen/margin16"
+        android:paddingBottom="200dp"
+        android:clipToPadding="false"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/margin16"
+        />
+    <RelativeLayout
+        android:id="@+id/bottomBarRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin8"
+        android:background="@drawable/ic_checkout_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/toBePaidTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin48"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold"
+            android:text="@string/to_be_paid"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toBePaidTextView"
+            android:layout_marginStart="@dimen/margin48"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/margin8"
+            android:text="@string/Rs1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize16" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@id/toBePaidTextView"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/continueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginEnd="@dimen/margin16"
+            android:layout_marginBottom="@dimen/margin16"
+            android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+            android:fontFamily="@font/p_bold"
+            android:text="@string/cont"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize18" />
+
+
+    </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}" />
+        <LinearLayout
+            android:id="@+id/noCartItemLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.noDataItemVisibility?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:src="@drawable/norecord"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/oops"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/p_bold"
+                android:textSize="@dimen/textSize18"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/no_record_found"
+                android:layout_gravity="center_horizontal|center"
+                android:fontFamily="@font/p_regular"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/margin8"
+                android:textSize="@dimen/textSize16"/>
+
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

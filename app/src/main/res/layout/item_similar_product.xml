@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="productList"
+            type="com.solbios.model.productDetails.SimilarProduct" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin8"
+        android:padding="8dp"
+        android:id="@+id/productlistRelativeLayout"
+       >
+
+        <ImageView
+            android:id="@+id/productImageView"
+            url="@{productList.image}"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginEnd="@dimen/margin16"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/dabur" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold"
+            android:layout_below="@id/productImageView"
+            android:text="@{productList.title}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/sizeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:fontFamily="@font/p_regular"
+            android:text="@{productList.sub_title}"
+            android:textSize="@dimen/textSize12" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sizeTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:visibility="gone"
+            android:rating="3.5"
+            android:stepSize="0.5" />
+
+        <TextView
+            android:id="@+id/ratingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sizeTextView"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_toEndOf="@id/ratingBar"
+            android:fontFamily="@font/p_regular"
+            android:text="3.5"
+            android:visibility="gone"
+            android:textColor="@color/purple_500"
+            android:textSize="@dimen/textSize12" />
+
+        <TextView
+            android:id="@+id/offerPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="5dp"
+            android:text=" "
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/actualPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/offerPriceTextView"
+            android:text=" "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/percentOffTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/actualPriceTextView"
+            android:fontFamily="@font/p_regular"
+            android:text="32% off"
+            android:textColor="@color/purple_500"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/addCartTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/percentOffTextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin16"
+            android:background="@drawable/ic_add_to_cart_background"
+            android:fontFamily="@font/p_bold"
+            android:padding="@dimen/margin8"
+            android:text="Add to cart"
+            android:visibility="gone"
+            android:textColor="@color/purple_500" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/margin16"
+            android:layout_below="@id/addCartTextView"
+            android:background="@color/gray"/>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+      <variable
+          name="viewModel"
+          type="com.solbios.ui.viewModel.authviewmodel.ForgotViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/messageImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/message"
+            android:layout_marginTop="@dimen/margin48"
+            android:layout_marginEnd="@dimen/margin24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/forgotTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:fontFamily="@font/p_bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/margin32dp"
+            android:textSize="@dimen/textSize18"
+            android:layout_marginStart="@dimen/margin24"
+            app:layout_constraintTop_toBottomOf="@id/messageImageView"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/descriptionForgotTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/please_enter_your_mobile_number_to_n_receive_a_verification"
+            android:fontFamily="@font/p_regular"
+            android:layout_marginTop="@dimen/margin16"
+            app:layout_constraintTop_toBottomOf="@id/forgotTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/margin24"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin40"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+            app:layout_constraintTop_toBottomOf="@id/descriptionForgotTextView"
+            app:prefixText="+91">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/p_regular"
+                android:text="@={viewModel.mobile}"
+                android:hint="@string/enter_10_digit_mobile_number"
+                android:inputType="number"
+                android:maxLength="10"/>
+        </com.google.android.material.textfield.TextInputLayout>
+<TextView
+    android:id="@+id/loginTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/back_to_login"
+    android:textSize="@dimen/textSize16"
+    android:fontFamily="@font/p_regular"
+    android:textColor="@color/purple_500"
+    android:layout_marginTop="@dimen/margin8"
+    android:layout_marginEnd="@dimen/margin24"
+    app:layout_constraintTop_toBottomOf="@id/phoneNumberTextInputLayout"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/sendOtpTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_otp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/p_bold"
+            android:background="@color/purple_500"
+            android:gravity="center"
+            android:textSize="@dimen/textSize16"
+            android:padding="@dimen/margin8"
+            android:onClick="@{(view) ->viewModel.forgotPassword(view)}"
+            android:layout_marginStart="@dimen/margin24"
+            android:layout_marginEnd="@dimen/margin24"
+            android:layout_marginTop="@dimen/margin40"
+            app:layout_constraintTop_toBottomOf="@id/loginTextView"
+            />
+        <TextView
+            android:id="@+id/checkTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin24"
+            android:fontFamily="@font/p_regular"
+            android:text="@string/please_check_your_email_and_mobile_number"
+            android:textColor="@color/red"
+            android:textSize="@dimen/textSize12"
+            android:visibility="@{viewModel.textVisibility?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/phoneNumberTextInputLayout" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.solbios.ui.viewModel.home.orderSummary.OrderDetailsViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/layout_toolbar_name" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin48"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/orderSuccessImageView"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="@dimen/margin8"
+                android:src="@drawable/check"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/orderDeliveredTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:layout_marginEnd="@dimen/margin8"
+                android:layout_marginBottom="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/order_success"
+                android:textColor="@color/green"
+                android:textSize="@dimen/textSize18"
+                app:layout_constraintStart_toEndOf="@id/orderSuccessImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/monthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:layout_marginEnd="@dimen/margin8"
+                android:layout_marginBottom="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/order_success"
+                android:textSize="@dimen/textSize12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/orderIdTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin48"
+                android:layout_marginTop="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/order"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orderDeliveredTextView" />
+
+            <TextView
+                android:id="@+id/orderIdValueTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize12"
+
+                app:layout_constraintStart_toEndOf="@id/orderIdTextView"
+                app:layout_constraintTop_toBottomOf="@id/orderDeliveredTextView" />
+
+            <RelativeLayout
+                android:id="@+id/deliveryOnRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#C8F4CC"
+                android:layout_marginTop="@dimen/margin16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/orderIdTextView">
+
+                <TextView
+                    android:id="@+id/deliveryDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin16"
+                    android:fontFamily="@font/p_bold"
+                    android:text="@string/delivery_on"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/textSize18" />
+
+                <TextView
+                    android:id="@+id/deliveryOnTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin16"
+                    android:fontFamily="@font/p_bold"
+                    android:text="@string/delivery_on"
+                    android:layout_marginEnd="@dimen/margin16"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/textSize18" />
+
+            </RelativeLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toBottomOf="@id/deliveryOnRelativeLayout">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray"
+                   >
+                    <RelativeLayout
+                        android:id="@+id/itemsRelativeLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin16"
+                        android:background="@drawable/ic_bottom_drawable">
+
+                        <TextView
+                            android:id="@+id/itemTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:fontFamily="@font/p_bold"
+                            android:text="@string/items"
+                            android:textSize="@dimen/textSize18"
+                            android:textColor="@color/black" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/itemsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/itemTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/itemsRelativeLayout"
+                        android:layout_margin="@dimen/margin16"
+                        android:layout_marginStart="@dimen/margin16"
+                        android:layout_marginTop="@dimen/margin16"
+                        android:layout_marginEnd="@dimen/margin16"
+                        android:layout_marginBottom="@dimen/margin16"
+                        android:background="@drawable/ic_bottom_drawable">
+
+                        <TextView
+                            android:id="@+id/orderDetailsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:fontFamily="@font/p_bold"
+                            android:text="@string/order_details"
+                            android:textSize="@dimen/textSize18"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/orderIdsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderDetailsTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawableStart="@drawable/box"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/order_id" />
+
+                        <TextView
+                            android:id="@+id/orderIdsValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderDetailsTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text=" " />
+
+                        <TextView
+                            android:id="@+id/orderDateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderIdsTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawableStart="@drawable/calender"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/order_date" />
+
+                        <TextView
+                            android:id="@+id/orderDateValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderIdsTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <View
+                            android:id="@+id/backgroundView"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/orderDateTextView"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/subTotalTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/backgroundView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/subtotal" />
+
+                        <TextView
+                            android:id="@+id/subTotalValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/backgroundView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/couponTotalTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/subTotalTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/coupon_discount" />
+
+                        <TextView
+                            android:id="@+id/couponTotalValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/subTotalTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/totalTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/couponTotalTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/total_payable"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/totalValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/couponTotalValueTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:text="" />
+
+                        <View
+                            android:id="@+id/backgroundView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/totalTextView"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/shippingAddressTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/backgroundView1"
+                            android:layout_marginStart="@dimen/margin16"
+                            android:layout_marginTop="@dimen/margin16"
+                            android:fontFamily="@font/p_bold"
+                            android:text="@string/shipping_address" />
+
+                        <TextView
+                            android:id="@+id/shippingAddressValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/shippingAddressTextView"
+                            android:layout_marginStart="@dimen/margin16"
+                            android:layout_marginTop="@dimen/margin16"
+                            android:fontFamily="@font/p_bold"
+                            android:text="@string/shipping_address"
+                            android:textSize="@dimen/textSize14" />
+
+                        <TextView
+                            android:id="@+id/addressTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/shippingAddressValueTextView"
+                            android:layout_marginStart="@dimen/margin16"
+                            android:fontFamily="@font/p_regular"
+                            android:text="Address"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/addressTypeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/shippingAddressTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin16"
+                            android:fontFamily="@font/p_regular"
+                            android:text="addressType"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/cityTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/addressTextView"
+                            android:layout_marginStart="@dimen/margin16"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:fontFamily="@font/p_regular"
+                            android:text="city"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/stateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/addressTextView"
+                            android:layout_marginStart="@dimen/margin8"
+
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_toEndOf="@id/cityTextView"
+                            android:fontFamily="@font/p_regular"
+                            android:text="state"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/pinCodeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/addressTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+
+                            android:layout_toEndOf="@id/stateTextView"
+                            android:fontFamily="@font/p_regular"
+                            android:text="pincode"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/mobileTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cityTextView"
+                            android:layout_marginStart="@dimen/margin16"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:fontFamily="@font/p_regular"
+                            android:text="@string/mobile"
+                            android:textSize="@dimen/textSize16" />
+
+                        <TextView
+                            android:id="@+id/numberTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/cityTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin16"
+                            android:layout_toEndOf="@id/mobileTextView"
+                            android:fontFamily="@font/p_regular"
+                            android:text="contact_number"
+                            android:textSize="@dimen/textSize16" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

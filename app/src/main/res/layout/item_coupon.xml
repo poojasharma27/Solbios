@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.solbios.model.cart.applycoupon.ApplyCouponData" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/brandImageView"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            url="@{viewModel.image}"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin16" />
+
+        <TextView
+            android:id="@+id/applyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/purple_500"
+            android:text="Apply"
+            android:layout_marginTop="@dimen/margin16"
+            android:layout_marginEnd="@dimen/margin16"
+            android:fontFamily="@font/p_bold" />
+
+        <TextView
+            android:id="@+id/titileTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brandImageView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold"
+            android:text="@{viewModel.coupon_title}"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/couponCodeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coupon_code"
+            android:layout_below="@id/titileTextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold" />
+
+        <TextView
+            android:id="@+id/codeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titileTextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_toEndOf="@id/couponCodeTextView"
+            android:fontFamily="@font/p_regular"
+            android:text="@{viewModel.coupon_code}" />
+
+        <TextView
+            android:id="@+id/expiresTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expires"
+            android:layout_below="@id/couponCodeTextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.format_expiry_date}"
+            android:layout_below="@id/couponCodeTextView"
+            android:layout_toEndOf="@id/expiresTextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_regular" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@id/dateTextView"
+            android:background="@color/gray"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginEnd="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8" />
+    </RelativeLayout>
+</layout>

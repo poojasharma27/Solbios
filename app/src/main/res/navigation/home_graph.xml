@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/homeFragment">
+
+    <include app:graph="@navigation/auth_graph" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.solbios.ui.fragment.home.home.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.solbios.ui.fragment.home.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_productListDescription"
+            app:destination="@id/productListDescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.solbios.ui.fragment.home.profile.ProfileFragment"
+        android:label="ProfileFragment"
+    >
+        <action
+            android:id="@+id/action_profileFragment_to_auth"
+            app:destination="@id/auth"/>
+        <action
+            android:id="@+id/action_profileFragment_to_userOrderDetails"
+            app:destination="@id/userOrderDetails"/>
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.solbios.ui.fragment.home.home.product.ProductListFragment"
+        android:label="ProductListFragment" >
+        <action
+            android:id="@+id/action_productListFragment_to_customBottomSheetDialogFragment"
+            app:destination="@id/customBottomSheetDialogFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_filterBottomSheetDialogFragment"
+            app:destination="@id/filterBottomSheetDialogFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+
+        <argument
+            android:name="brandId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_productListFragment_to_productListDescription"
+            app:destination="@id/productListDescription" />
+        <action
+            android:id="@+id/action_productListFragment_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+        <argument
+            android:name="id"
+            app:argType="string" />
+
+
+    </fragment>
+    <dialog
+        android:id="@+id/customBottomSheetDialogFragment"
+        android:name="com.solbios.ui.dialog.ShortBottomSheetDialogFragment"
+        android:label="CustomBottomSheetDialogFragment" >
+
+    </dialog>
+    <dialog
+        android:id="@+id/filterBottomSheetDialogFragment"
+        android:name="com.solbios.ui.dialog.FilterBottomSheetDialogFragment"
+        android:label="FilterBottomSheetDialogFragment" >
+        <action
+            android:id="@+id/action_filterBottomSheetDialogFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/productListDescription"
+        android:name="com.solbios.ui.fragment.home.home.product.ProductListDescription"
+        android:label="ProductListDescription" >
+        <action
+            android:id="@+id/action_productListDescription_to_productListDescription"
+            app:destination="@id/productListDescription" />
+        <action
+            android:id="@+id/action_productListDescription_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_productListDescription_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.solbios.ui.fragment.cart.CartFragment"
+        android:label="CartFragment" >
+        <action
+            android:id="@+id/action_cartFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_applyCouponFragment"
+            app:destination="@id/applyCouponFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_selectAddressFragment"
+            app:destination="@id/selectAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/applyCouponFragment"
+        android:name="com.solbios.ui.fragment.cart.applyCoupon.ApplyCouponFragment"
+        android:label="ApplyCouponFragment" >
+
+        <argument
+            android:name="toBePaid"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectAddressFragment"
+        android:name="com.solbios.ui.fragment.cart.address.SelectAddressFragment"
+        android:label="SelectAddressFragment" >
+        <action
+            android:id="@+id/action_selectAddressFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment" />
+        <action
+            android:id="@+id/action_selectAddressFragment_to_orderSummaryFragment"
+            app:destination="@id/orderSummaryFragment" />
+       <!-- <argument
+            android:name="price"
+            app:argType="integer" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.solbios.ui.fragment.cart.address.AddAddressFragment"
+        android:label="AddAddressFragment" >
+        <action
+            android:id="@+id/action_addAddressFragment_to_selectAddressFragment"
+            app:destination="@id/selectAddressFragment" />
+        <argument
+            android:name="Id"
+            app:argType="string"
+            app:nullable="true"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/orderSummaryFragment"
+        android:name="com.solbios.ui.fragment.cart.orderSummary.OrderSummaryFragment"
+        android:label="OrderSummaryFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            />
+        <action
+            android:id="@+id/action_orderSummaryFragment_to_selectAddressFragment"
+            app:destination="@id/selectAddressFragment" />
+        <action
+            android:id="@+id/action_orderSummaryFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.solbios.ui.fragment.cart.payment.PaymentFragment"
+        android:label="PaymentFragment" >
+        <argument
+            android:name="addressId"
+            app:argType="integer" />
+        <argument
+            android:name="itemTotal"
+            app:argType="string" />
+        <argument
+            android:name="priceDiscount"
+            app:argType="string" />
+        <argument
+            android:name="toBePaid"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_paymentFragment_to_paymentSuccessFragment"
+            app:destination="@id/paymentSuccessFragment" />
+        <action
+            android:id="@+id/action_paymentFragment_to_paymentFailureFragment"
+            app:destination="@id/paymentFailureFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/paymentSuccessFragment"
+        android:name="com.solbios.ui.fragment.cart.payment.PaymentSuccessFragment"
+        android:label="PaymentSuccessFragment" >
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_userOrderDetails"
+            app:destination="@id/userOrderDetails" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/userOrderDetails"
+        android:name="com.solbios.ui.fragment.cart.userOrder.UserOrderDetailsFragment"
+        android:label="UserOrderDetails" >
+        <action
+            android:id="@+id/action_userOrderDetails_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_userOrderDetails_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentFailureFragment"
+        android:name="com.solbios.ui.fragment.cart.payment.PaymentFailureFragment"
+        android:label="PaymentFailureFragment" >
+        <action
+            android:id="@+id/action_paymentFailureFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.solbios.ui.fragment.cart.orderDetails.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+</navigation>

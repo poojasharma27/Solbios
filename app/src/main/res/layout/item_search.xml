@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.solbios.model.search.Data" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/searchRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/searchImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            url="@{viewModel.image}"
+            android:layout_margin="@dimen/margin8"/>
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/searchImageView"
+            android:text="@{viewModel.title}"
+            android:fontFamily="@font/p_bold"
+            android:layout_margin="@dimen/margin8"/>
+        <TextView
+            android:id="@+id/weightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/searchImageView"
+            android:text="@{viewModel.sub_title}"
+            android:layout_below="@id/titleTextView"
+            android:fontFamily="@font/p_regular"
+            android:layout_marginStart="@dimen/margin8"
+            />
+
+
+    </RelativeLayout>
+</layout>

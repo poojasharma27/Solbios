@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+<variable
+    name="viewModel"
+    type="com.solbios.model.home.Category" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/PopularCategoriesRelativeLayout"
+       >
+
+
+
+        <ImageView
+            android:id="@+id/categoriesImageView"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            url="@{viewModel.image}"
+            android:layout_margin="@dimen/margin8"
+            android:padding="4dp"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/pills" />
+        <TextView
+            android:id="@+id/categoriesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            android:textSize="@dimen/textSize12"
+            android:layout_below="@id/categoriesImageView"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/p_regular"
+            />
+
+
+    </RelativeLayout>
+</layout>
