@@ -34,14 +34,16 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
+class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener,RecentSearchAdapter.OnRecentSearchItem {
 
   private var binding:FragmentSearchBinding?=null
   private val viewModel:SearchViewModel by viewModels()
     var sessionManagement: SessionManagement?=null
     var adapter:RecentSearchAdapter?=null
-
   val searchList= mutableListOf<Data>()
+    var searchDataEntity:List<SearchData?>?=null
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,7 +58,6 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         sessionManagement= context?.let { SessionManagement(it) }
         setToolbar()
-        recentSearchRelativeLayout.visibility=View.VISIBLE
 
 
     }
@@ -76,8 +77,8 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
         clearAllTextView.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 AppDataBase.invoke(context)?.clearAllTables()
-                adapter?.notifyDataSetChanged()
-
+                recentSearchRecyclerView.adapter=null
+                recentSearchRelativeLayout.visibility=View.INVISIBLE
             }
         }
     }
@@ -159,13 +160,31 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
 
     private fun getRecentSearch(){
         CoroutineScope(Dispatchers.Main).launch {
-                val searchDataEntity = AppDataBase.invoke(context)?.searchDetailsDao()
-                    ?.getAllRecentSearch()
-                  adapter=RecentSearchAdapter(searchDataEntity as List<SearchData>)
-                 recentSearchRecyclerView.adapter=adapter
-                Log.d("articleEntity", searchDataEntity.toString())
+                 searchDataEntity = AppDataBase.invoke(context)?.searchDetailsDao()?.getAllRecentSearch()
+            setSearchAdapter(searchDataEntity)
+            setRecentText(searchDataEntity)
+        }
+    }
+
+    private fun setRecentText(searchDataEntity: List<SearchData?>?) {
+        if(searchDataEntity?.size!=0){
+            recentSearchRelativeLayout.visibility=View.VISIBLE
+        }
+        else{
+            recentSearchRelativeLayout.visibility=View.INVISIBLE
 
         }
+    }
+
+    private fun setSearchAdapter(searchDataEntity: List<SearchData?>?) {
+        adapter=RecentSearchAdapter(searchDataEntity as List<SearchData>,this)
+        recentSearchRecyclerView.adapter=adapter
+    }
+
+    override fun onRecentSearch(view: View, position: Int) {
+        val id= searchDataEntity?.get(position)?.id
+        Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToProductListDescription(id!!))
+
     }
 
 

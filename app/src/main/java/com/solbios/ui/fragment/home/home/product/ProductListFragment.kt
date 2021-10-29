@@ -47,7 +47,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
     var totalItemCount:Int = 0
     lateinit var layoutManager :LinearLayoutManager
    var sessionManagement: SessionManagement?=null
-
+   var cartTotalPrice:Double=0.0
     var page:Int=1
 
     override fun onCreateView(
@@ -70,7 +70,6 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)
         sortByOnClickListener()
         filterOnClickListener()
-
 
         startAddToCartJob()
 
@@ -121,6 +120,10 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         }
         cartImageView.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_productListFragment_to_cartFragment)
+        }
+        goToCartTextView.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_productListFragment_to_cartFragment)
+
         }
     }
 
@@ -196,7 +199,8 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
                     allProductDeatilsTextView.text=it.total.toString()+" "+"products available "
                    pagination(it.next_page)
                     setBadge(it.cart_total)
-
+                   setItem(it.cart_total,it.cart_total_amount.toDouble())
+                 cartTotalPrice=it.cart_total_amount.toDouble()
                 }
 
 
@@ -204,6 +208,17 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
 
         }
     }
+
+    private fun setItem(cartTotal: Int,total:Double) {
+     if (cartTotal==0){
+         relativeLayout.visibility=View.INVISIBLE
+     }else{
+       itemSizeTextView.text=cartTotal.toString()+" "+"Item"
+         salePriceTextView.text="\u20b9"+total.toString()
+         relativeLayout.visibility=View.VISIBLE
+     }
+    }
+
     lateinit var addtoCartJob:Job
     fun updateAddToCartUi(state: ApiState){
         when(state){
@@ -219,6 +234,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
             is ApiState.Success<*> -> {
                 (state.data as? AddToCartRoot)?.let {
                   setBadge(it.data.cart_total)
+                   setItem(it.data.cart_total,cartTotalPrice)
 
                 }
 
@@ -274,12 +290,13 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
 
 
     override fun addOnItem(action: Int?, position: Int) {
-     viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
-
+        cartTotalPrice=cartTotalPrice.plus(productList[position].sales_price)
+        viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
     }
 
     override fun removeOnItem(action: Int?, position: Int) {
         startAddToCartJob()
+        cartTotalPrice=cartTotalPrice.minus(productList[position].sales_price)
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
 
     }
