@@ -14,15 +14,21 @@ import androidx.navigation.Navigation
 import com.firstapp.sharedPreference.SessionManagement
 import com.solbios.R
 import com.solbios.databinding.FragmentSearchBinding
+import com.solbios.db.AppDataBase
+import com.solbios.db.entities.SearchData
+import com.solbios.mapper.toSearchDataEntity
 import com.solbios.model.home.PopularCategoriesRoot
 import com.solbios.model.search.Data
 import com.solbios.model.search.SearchRoot
 import com.solbios.network.ApiState
+import com.solbios.ui.adapter.RecentSearchAdapter
 import com.solbios.ui.adapter.SearchAdapter
 import com.solbios.ui.viewModel.home.searchViewModel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.layout_search_toolbar.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -33,6 +39,8 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
   private var binding:FragmentSearchBinding?=null
   private val viewModel:SearchViewModel by viewModels()
     var sessionManagement: SessionManagement?=null
+    var adapter:RecentSearchAdapter?=null
+
   val searchList= mutableListOf<Data>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +56,7 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         sessionManagement= context?.let { SessionManagement(it) }
         setToolbar()
+        recentSearchRelativeLayout.visibility=View.VISIBLE
 
 
     }
@@ -60,8 +69,17 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
         searchViewEditText.addTextChangedListener {
             searchList.clear()
             viewModel.getSearch("Bearer"+" "+sessionManagement?.getToken(),it.toString())
+            recentSearchRelativeLayout.visibility=View.INVISIBLE
         }
         startJob()
+        getRecentSearch()
+        clearAllTextView.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                AppDataBase.invoke(context)?.clearAllTables()
+                adapter?.notifyDataSetChanged()
+
+            }
+        }
     }
 
     lateinit var searchJob: Job
@@ -106,7 +124,48 @@ class SearchFragment : Fragment(),SearchAdapter.OnSearchItemClickListener {
     }
 
     override fun searchItemClickListener(view: View, position: Int) {
+        searchDb(position)
         Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToProductListDescription(searchList[position].id))
+    }
+  // list Add in Db code
+    private fun updateDb(){
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val searchEntityList = mutableListOf<SearchData>()
+            for (item in searchList) {
+                searchEntityList.add(item.toSearchDataEntity())
+            }
+            context?.let {
+                val SearchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
+                    ?.addDetails(searchEntityList)
+
+                Log.d("articleEntity", SearchDataEntity.toString())
+            }
+
+        }
+    }
+
+    private fun searchDb(position:Int){
+        val searchEntity=SearchData(searchList[position].id,searchList[position].image,searchList[position].sub_title,searchList[position].title)
+        CoroutineScope(Dispatchers.Main).launch {
+            context?.let {
+                val searchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
+                    ?.searchAddDetails(searchEntity)
+
+                Log.d("articleEntity", searchDataEntity.toString())
+            }
+        }
+    }
+
+    private fun getRecentSearch(){
+        CoroutineScope(Dispatchers.Main).launch {
+                val searchDataEntity = AppDataBase.invoke(context)?.searchDetailsDao()
+                    ?.getAllRecentSearch()
+                  adapter=RecentSearchAdapter(searchDataEntity as List<SearchData>)
+                 recentSearchRecyclerView.adapter=adapter
+                Log.d("articleEntity", searchDataEntity.toString())
+
+        }
     }
 
 

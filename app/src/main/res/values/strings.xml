@@ -137,5 +137,7 @@
     <string name="shipping_address">Shipping Address:</string>
     <string name="order_details">Order Details</string>
     <string name="no_order_found">No Order Found</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_all">Clear All</string>
 
 </resources>
