@@ -24,6 +24,10 @@ class ProductViewModel @Inject constructor(val productListRepository: ProductLis
     val apiState: StateFlow<ApiState> by lazy {
         _apiState
     }
+    private val _apiStateFilter= MutableStateFlow<ApiState>(ApiState.Empty)
+    val apiStateFilter: StateFlow<ApiState> by lazy {
+        _apiStateFilter
+    }
     private val _apiStateAddtoCart= MutableStateFlow<ApiState>(ApiState.Empty)
     val apiStateAddToCart: StateFlow<ApiState> by lazy {
         _apiStateAddtoCart
@@ -72,5 +76,20 @@ class ProductViewModel @Inject constructor(val productListRepository: ProductLis
         }
     }
 
+    fun getFilter(){
+        viewModelScope.launch {
+            productListRepository.getFilter().onStart {
+                _apiStateFilter.value=ApiState.Loading
+
+            }.catch {e->
+                _apiStateFilter.value=ApiState.Failure(e)
+
+
+            }.collect {
+                _apiStateFilter.value=ApiState.Success(it.data)
+
+            }
+        }
+    }
 
 }

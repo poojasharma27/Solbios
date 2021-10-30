@@ -70,7 +70,8 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)
         sortByOnClickListener()
         filterOnClickListener()
-
+  startFilterJob()
+        viewModel.getFilter()
         startAddToCartJob()
 
 
@@ -301,4 +302,39 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
 
     }
 
+    private  lateinit var filterJob : Job
+    fun updateFilterUi(state: ApiState){
+        when(state){
+            ApiState.Empty -> {
+
+            }
+            is ApiState.Failure -> {
+                Log.d("TAG", "updateUi: ")
+            }
+            ApiState.Loading -> {
+                Log.d("TAG", "updateUi: ")
+            }
+            is ApiState.Success<*> -> {
+                (state.data as? com.solbios.model.filter.Data)?.let {
+                    categoryList.clear()
+                    brandList.clear()
+                    categoryList.addAll(it.categories)
+                    brandList.addAll(it.brands)
+                }
+
+
+            }
+
+        }
+    }
+    private fun startFilterJob() {
+        filterJob =  lifecycleScope.launch {
+            viewModel.apiStateFilter.collect {
+                updateFilterUi(it)
+
+            }
+        }
+
+        filterJob.start()
+    }
 }

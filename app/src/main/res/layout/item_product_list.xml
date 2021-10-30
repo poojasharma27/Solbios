@@ -59,9 +59,9 @@
             android:layout_toEndOf="@id/productImageView"
             android:isIndicator="false"
             android:numStars="5"
-            android:visibility="gone"
-            android:rating="3.5"
-            android:stepSize="0.5" />
+            android:rating="5.0"
+            android:stepSize="0.5"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/ratingTextView"
@@ -103,7 +103,7 @@
             android:id="@+id/percentOffTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ratingTextView"
+            android:layout_below="@id/ratingBar"
             android:layout_marginStart="@dimen/margin8"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/actualPriceTextView"

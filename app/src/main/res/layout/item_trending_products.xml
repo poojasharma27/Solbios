@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.solbios.model.search.TrendingProduct" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/trendingImageView"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            url="@{viewModel.image}"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:layout_centerHorizontal="true" />
+
+
+        <TextView
+            android:id="@+id/trendingTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.title}"
+            android:fontFamily="@font/p_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16"
+            android:ems="10"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginStart="@dimen/margin16"
+
+            android:layout_below="@id/trendingImageView"/>
+
+        <TextView
+            android:id="@+id/trendingSubTitletextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.sub_title}"
+            android:ems="10"
+            android:layout_marginStart="@dimen/margin16"
+            android:textSize="@dimen/textSize14"
+            android:layout_below="@id/trendingTitleTextView"/>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/trendingSubTitletextView"
+            android:layout_marginStart="@dimen/margin16"
+            android:isIndicator="false"
+            android:numStars="5"
+            android:rating="5.0"
+            android:stepSize="0.5"
+            android:visibility="visible" />
+        <TextView
+            android:id="@+id/offerPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="5dp"
+            android:text="@{@string/Rs+viewModel.sales_price}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/actualPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/offerPriceTextView"
+            android:text="@{@string/Rs+viewModel.price}"
+            android:textSize="@dimen/textSize16" />
+
+        <TextView
+            android:id="@+id/percentOffTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_marginStart="@dimen/margin16"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/actualPriceTextView"
+            android:fontFamily="@font/p_regular"
+            android:text="32% off"
+            android:textColor="@color/purple_500"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</layout>

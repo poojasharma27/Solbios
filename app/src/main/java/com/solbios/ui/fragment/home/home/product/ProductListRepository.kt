@@ -2,6 +2,7 @@ package com.solbios.ui.fragment.home.home.product
 
 import com.solbios.interfaces.ApiServiceIn
 import com.solbios.model.addtocart.AddToCartRoot
+import com.solbios.model.filter.FilterRoot
 import com.solbios.model.productList.ProductionList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -20,6 +21,8 @@ class ProductListRepository @Inject constructor (val apiServiceIn: ApiServiceIn)
 
     }.flowOn(Dispatchers.IO)
 
-
+    suspend fun getFilter()=flow<FilterRoot>{
+        emit(apiServiceIn.filterList())
+    }.flowOn(Dispatchers.IO)
 
 }
