@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/drawable/rectangle.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.28189457601222306" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.34739583333333335" />
+        <entry key="app/src/main/res/layout/activity_no_internet.xml" value="0.14427083333333332" />
         <entry key="app/src/main/res/layout/dailog_payment_success.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/layout/fragment_add_address.xml" value="0.34739583333333335" />
         <entry key="app/src/main/res/layout/fragment_apply_coupon.xml" value="0.34739583333333335" />

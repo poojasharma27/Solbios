@@ -233,12 +233,36 @@
                     android:text="@string/Rs1"
                     android:textSize="@dimen/textSize14"
                     android:textStyle="normal" />
+                <TextView
+                    android:id="@+id/taxAmountTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/priceDiscountTextView"
+                    android:layout_marginStart="@dimen/margin16"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:fontFamily="@font/p_regular"
+                    android:text="@string/tax_amount"
+                    android:visibility="visible"
+                    android:textSize="@dimen/textSize14" />
+
+                <TextView
+                    android:id="@+id/taxValueTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/priceDiscountTextView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_marginEnd="@dimen/margin16"
+                    android:text="@string/Rs1"
+                    android:visibility="visible"
+                    android:textSize="@dimen/textSize14"
+                    android:textStyle="normal" />
 
                 <View
                     android:id="@+id/backgroundView1"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_below="@id/priceDiscountTextView"
+                    android:layout_below="@id/taxAmountTextView"
                     android:layout_marginStart="@dimen/margin16"
                     android:layout_marginTop="@dimen/margin8"
                     android:layout_marginEnd="@dimen/margin16"

@@ -28,3 +28,4 @@ fun image(view: ImageView, url: String?) {
     }
 
 }
+

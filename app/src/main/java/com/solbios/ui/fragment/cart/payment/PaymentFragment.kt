@@ -26,6 +26,12 @@ import com.solbios.other.Success
 import com.solbios.ui.AuthActivity
 import com.solbios.ui.viewModel.home.payment.PaymentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_order_summary.*
+import kotlinx.android.synthetic.main.fragment_payment.discountPriceTextView
+import kotlinx.android.synthetic.main.fragment_payment.itemPricesTextView
+import kotlinx.android.synthetic.main.fragment_payment.paidPricesTextView
+import kotlinx.android.synthetic.main.fragment_payment.pricesTextView
+import kotlinx.android.synthetic.main.fragment_payment.taxValueTextView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -66,9 +72,11 @@ class PaymentFragment : Fragment() {
            val orderId = it?.getString(Constants.orderId)
            val paymentId = it?.getString(Constants.paymentId)
            val reason = it?.getString(Constants.reason)
+           val amount=args.toBePaid.plus(args.taxAmount).toString()
+
            if(orderId!=null) {
-               viewModel.createOrderId(view, "Bearer" + " " + sessionManagement?.getToken(), args.toBePaid.toString(), args.addressId, orderId, 2, paymentId, 2, reason
-               )
+               viewModel.createOrderId(view, "Bearer" + " " + sessionManagement?.getToken(), amount, args.addressId, orderId, 2, paymentId, 2, reason
+               ,args.taxAmount.toString())
            }  }
         it.clear()
     }
@@ -79,18 +87,21 @@ class PaymentFragment : Fragment() {
             paymentSuccess.apply {
                 val orderId = it?.getString(Constants.orderId)
                 val paymentId = it?.getString(Constants.paymentId)
+                val amount=args.toBePaid.plus(args.taxAmount).toString()
                 if(orderId!=null) {
-                    viewModel.createOrderId(view, "Bearer" + " " + sessionManagement?.getToken(), args.toBePaid.toString(), args.addressId, orderId, 2, paymentId, 1, "success")
+                    viewModel.createOrderId(view, "Bearer" + " " + sessionManagement?.getToken(), amount, args.addressId, orderId, 2, paymentId, 1, "success",args.taxAmount.toString())
                 }
             }
             it.clear()
         }    }
 
     private fun setArgsValue() {
-        pricesTextView.text="\u20B9"+args.toBePaid
+        pricesTextView.text="\u20B9"+args.toBePaid.plus(args.taxAmount)
         itemPricesTextView.text="\u20B9"+args.itemTotal
-        discountPriceTextView.text="\u20B9"+args.priceDiscount
-        paidPricesTextView.text="\u20B9"+args.toBePaid
+        discountPriceTextView.text="_"+"\u20B9"+args.priceDiscount
+        paidPricesTextView.text="\u20B9"+args.toBePaid.plus(args.taxAmount)
+        taxValueTextView.text="+"+"\u20B9"+args.taxAmount
+
     }
 
 
@@ -108,16 +119,16 @@ class PaymentFragment : Fragment() {
         }
     @SuppressLint("ResourceType")
     private fun setCheckRadioButton(view: View) {
-        var amount=args.toBePaid.toString()
+        var amount=args.toBePaid.plus(args.taxAmount).toString()
         var token="Bearer"+" "+sessionManagement?.getToken()
         if(paymentRadioGroup.getCheckedRadioButtonId()<=0){
             Toast.makeText(activity,"Please Select payment Type",Toast.LENGTH_LONG).show()
 
         }else if(cashOnDeliveryRadioButton.isChecked){
-            viewModel.createOrderId(view,token,amount,args.addressId,"",1,"",1,"success")
+            viewModel.createOrderId(view,token,amount,args.addressId,"",1,"",1,"success",args.taxAmount.toString())
 
         }else if(onlineDeliveryRadioButton.isChecked){
-            viewModel.getOrderId(token,amount)
+            viewModel.getOrderId(token,amount,args.taxAmount.toString())
 
         }
 

@@ -10,13 +10,13 @@ import javax.inject.Inject
 
 class PaymentRepository  @Inject constructor( val  apiServiceIn: ApiServiceIn) {
 
-    suspend fun getOrderId(header:String?,amount:String?)= flow<OrderIdRoot> {
-        emit(apiServiceIn.orderId(header,amount))
+    suspend fun getOrderId(header:String?,amount:String?,taxAmount:String?)= flow<OrderIdRoot> {
+        emit(apiServiceIn.orderId(header,amount,taxAmount))
 
     }.flowOn(Dispatchers.IO)
 
-    suspend fun createOrderId(header:String?,amount:String?,addressId:Int?,orderId:String?,paymentType:Int?,transationId:String?,status:Int?,reason:String?)= flow<CreateOrderIdRoot> {
-        emit(apiServiceIn.createOrderId(header,amount,addressId,orderId,paymentType,transationId,status,reason))
+    suspend fun createOrderId(header:String?,amount:String?,addressId:Int?,orderId:String?,paymentType:Int?,transationId:String?,status:Int?,reason:String?,taxAmount:String?)= flow<CreateOrderIdRoot> {
+        emit(apiServiceIn.createOrderId(header,amount,addressId,orderId,paymentType,transationId,status,reason,taxAmount))
 
     }.flowOn(Dispatchers.IO)
 }

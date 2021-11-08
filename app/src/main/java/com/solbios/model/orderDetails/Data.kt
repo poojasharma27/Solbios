@@ -8,6 +8,7 @@ data class Data(
     val format_created_at: String,
     val id: Int,
     val order_id: String,
+    val format_payment_type: String,
     val order_status: Int,
     val payment_type: Int,
     val products: List<Product>,

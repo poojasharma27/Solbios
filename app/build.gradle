@@ -110,5 +110,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
 
 
+// fusedLocation
+    implementation "com.google.android.gms:play-services-location:18.0.0"
 
 }

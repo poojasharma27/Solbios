@@ -33,6 +33,7 @@ class OrderSummaryFragment : Fragment() {
    private var sessionManagement: SessionManagement?=null
     var itemTotalPrice:String=" "
     var toBePaidPrice:Int=0
+    var taxAmount:Int=0
     var priceDiscount:String=" "
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +63,7 @@ class OrderSummaryFragment : Fragment() {
 
         confirmTextView.setOnClickListener {
             val addressId: Int =viewModel.id!!
-            Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId,itemTotalPrice,priceDiscount,toBePaidPrice))
+            Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId,itemTotalPrice,priceDiscount,toBePaidPrice,taxAmount))
         }
         changeTextView.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_orderSummaryFragment_to_selectAddressFragment)
@@ -89,7 +90,9 @@ class OrderSummaryFragment : Fragment() {
                     setAdapter(it.data.cart_data)
                 itemTotalPrice=it.totalRealPrice.toString()
                 toBePaidPrice=it.totalFinalPrice
+                taxAmount=it.tax_amount
                 priceDiscount=it.totalRealPrice.minus(it.totalFinalPrice).toString()
+                    //taxAmountValueTextView.text=it.tax_amount.toString()
                 }
 
 
@@ -110,10 +113,10 @@ class OrderSummaryFragment : Fragment() {
         stateTextView.text=it.data.delivery_address.state
         numberTextView.text= it.data.delivery_address.contact_number.toString()
         itemPricesTextView.text= "\u20B9"+it.totalRealPrice.toString()
-        pricesTextView.text= "\u20B9"+it.totalFinalPrice.toString()
-        paidPricesTextView.text="\u20B9"+ it.totalFinalPrice.toString()
-        discountPriceTextView.text="\u20B9"+it.totalRealPrice.minus(it.totalFinalPrice).toString()
-
+        pricesTextView.text= "\u20B9"+it.totalFinalPrice.plus(it.tax_amount)
+        paidPricesTextView.text="\u20B9"+ it.totalFinalPrice.plus(it.tax_amount)
+        discountPriceTextView.text="_"+"\u20B9"+it.totalRealPrice.minus(it.totalFinalPrice).toString()
+        taxValueTextView.text="+"+"\u20B9"+it.tax_amount.toString()
 
     }
 

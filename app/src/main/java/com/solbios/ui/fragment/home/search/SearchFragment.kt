@@ -178,20 +178,22 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
     }
 
     private fun searchDb(position: Int) {
-        val searchEntity = SearchData(
-            searchList[position].id,
-            searchList[position].image,
-            searchList[position].sub_title,
-            searchList[position].title
-        )
-        CoroutineScope(Dispatchers.Main).launch {
-            context?.let {
-                val searchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
-                    ?.searchAddDetails(searchEntity)
+            val searchEntity = SearchData(
+                searchList[position].id,
+                searchList[position].image,
+                searchList[position].sub_title,
+                searchList[position].title
+            )
 
-                Log.d("articleEntity", searchDataEntity.toString())
+            CoroutineScope(Dispatchers.Main).launch {
+                context?.let {
+                    val searchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
+                        ?.searchAddDetails(searchEntity)
+
+                    Log.d("articleEntity", searchDataEntity.toString())
+                }
             }
-        }
+
     }
 
     private fun getRecentSearch() {
@@ -203,16 +205,6 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
         }
     }
 
-//    @JvmName("setSearchValue1")
-//    private fun setSearchValue(searchValue: String?) {
-//        if (searchValue?.length == 0 && searchValue.isEmpty()) {
-//            recentSearchRelativeLayout.visibility = View.VISIBLE
-//        } else {
-//            recentSearchRelativeLayout.visibility = View.INVISIBLE
-//
-//        }
-//
-//    }
 
     private fun setRecentText(searchDataEntity: List<SearchData?>?) {
         if (searchDataEntity?.size != 0 && searchValue==null) {

@@ -137,12 +137,14 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
   var filterBottomSheet : FilterBottomSheetDialogFragment? = null
     private fun filterOnClickListener() {
         filterBottomSheet = FilterBottomSheetDialogFragment(object : FilterBottomSheetDialogFragment.CallbackListener{
-            override fun onBrandsSelected(brandIdList: String) {
+            override fun onBrandsSelected(brandIdList: String,catIdList: Int) {
                 viewModel.brandId=brandIdList
+                viewModel.data=catIdList.toString()
                 viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)            }
 
-            override fun onCategorySelected(catIdList: Int) {
+            override fun onCategorySelected(catIdList: Int,brandIdList: String) {
                 viewModel.data=catIdList.toString()
+                viewModel.brandId=brandIdList
                 viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)            }
 
         })

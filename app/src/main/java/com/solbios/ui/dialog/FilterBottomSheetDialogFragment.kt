@@ -59,34 +59,38 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         crossOnClickListener()
-        if(ProductListFragment.categoryList.isEmpty()&&ProductListFragment.brandList.isEmpty()) {
+      /*  if(ProductListFragment.categoryList.isEmpty()&&ProductListFragment.brandList.isEmpty()) {
             viewModel.getFilter()
         }else{
            setCategory(ProductListFragment.categoryList)
             setBrand(ProductListFragment.brandList)
-        }
+        }*/
         setSelected()
         //startJob()
         setCategory(ProductListFragment.categoryList)
         setBrand(ProductListFragment.brandList)
 
       applyTextView.setOnClickListener {
-         if(catId==null){
+       val brandId=brandIdList
+          val id = catId
+          callBacklistener?.onBrandsSelected(brandId.toString(),Integer.parseInt(id.toString()))
+          callBacklistener?.onCategorySelected(Integer.parseInt(id.toString()),brandId.toString())
+       /*  if(catId==null){
             val brandId=brandIdList
             callBacklistener?.onBrandsSelected(brandId.toString())
          }else {
              val id = catId
              callBacklistener?.onCategorySelected(Integer.parseInt(id.toString()))
 
-         }
+        } */
         dialog?.dismiss()
-
      }
     clearTextView.setOnClickListener {
       //  brandIdList.clear()
         pos?.let {
             ProductListFragment.brandList[it].selected =false
         }
+
         dialog?.dismiss()
     }
     }
@@ -210,9 +214,8 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
 
 
     interface CallbackListener {
-
-        fun onBrandsSelected(brandIdList: String)
-        fun onCategorySelected(catIdList: Int)
+        fun onBrandsSelected(brandIdList: String,catIdList: Int)
+        fun onCategorySelected(catIdList: Int,brandIdList: String)
     }
 
 

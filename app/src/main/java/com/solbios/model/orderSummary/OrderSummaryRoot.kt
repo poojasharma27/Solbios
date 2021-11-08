@@ -6,5 +6,7 @@ data class OrderSummaryRoot(
     val message: String,
     val total: Int,
     val totalFinalPrice: Int,
-    val totalRealPrice: Int
+    val totalRealPrice: Int,
+    val tax_amount :Int
+
 )

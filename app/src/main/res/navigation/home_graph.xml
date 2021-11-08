@@ -188,6 +188,10 @@
         <argument
             android:name="toBePaid"
             app:argType="integer" />
+        <argument
+            android:name="taxAmount"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_paymentFragment_to_paymentSuccessFragment"
             app:destination="@id/paymentSuccessFragment" />

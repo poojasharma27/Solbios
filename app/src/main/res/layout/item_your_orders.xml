@@ -126,17 +126,21 @@
             android:gravity="center"
             android:layout_toEndOf="@id/AmountTextView"
             android:text="@{@string/Rs+String.valueOf(viewModel.total_amount)}" />
+
         <TextView
             android:id="@+id/tabletQuantityTextView"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="(3more)"
-           android:layout_margin="@dimen/margin8"
-           android:fontFamily="@font/p_bold"
-           android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/orderDateTextView"
             android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/margin8"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_marginEnd="@dimen/margin8"
+            android:layout_marginBottom="@dimen/margin8"
             android:drawablePadding="@dimen/margin5"
-           android:layout_below="@id/orderDateTextView"/>
+            android:fontFamily="@font/p_bold"
+            android:gravity="center"
+            android:text="@{viewModel.products_count+@string/more}" />
 
         <View
             android:id="@+id/backgroundView1"

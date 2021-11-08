@@ -52,6 +52,7 @@
     <string name="discount">Discount</string>
     <string name="filter">Filter</string>
     <string name="Rs">\u20B9</string>
+    <string name="more">more</string>
     <string name="multiply">*</string>
     <string name="Qty">Qty: </string>
     <string name="Rs1">\u20B9 0</string>
@@ -141,5 +142,10 @@
     <string name="clear_all">Clear All</string>
     <string name="go_to_cart">Go to cart</string>
     <string name="trendn_gproducts">Trending products</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="transaction_id">Transaction Id</string>
+    <string name="tax_amount">Tax Amount</string>
+    <string name="again">Try Again</string>
+    <string name="no_internet_please_try_again">no Internet Please try Again</string>
 
 </resources>
