@@ -75,7 +75,7 @@ interface ApiServiceIn {
     suspend fun userAddressDetail(@Header ("Authorization") token:String?,@Query("id") id:String?): AddAddressRoot
 
     @GET("online-detail")
-    suspend fun orderId(@Header ("Authorization") token:String?,@Query("amount") amount:String?): OrderIdRoot
+    suspend fun orderId(@Header ("Authorization") token:String?,@Query("amount") amount:String?,@Query("tax_amount") taxAmount:String?): OrderIdRoot
 
     @GET("global-search")
     suspend fun search(@Header ("Authorization") token:String?,@Query("keyword") keyword:String?): SearchRoot
@@ -99,5 +99,5 @@ interface ApiServiceIn {
     suspend fun deleteAddress(@Header ("Authorization") token:String?,@Query("id") id:Int?):DeleteAddressRoot
 
      @POST("create_order")
-     suspend fun createOrderId(@Header("Authorization") token:String?,@Query("amount") amount: String?,@Query("address_id") addressId:Int?,@Query("order_id") orderId:String?,@Query("payment_type") paymentType:Int?,@Query("transaction_id") transtionId:String?,@Query("status") status:Int?,@Query("reason") reason:String?):CreateOrderIdRoot
+     suspend fun createOrderId(@Header("Authorization") token:String?,@Query("amount") amount: String?,@Query("address_id") addressId:Int?,@Query("order_id") orderId:String?,@Query("payment_type") paymentType:Int?,@Query("transaction_id") transtionId:String?,@Query("status") status:Int?,@Query("reason") reason:String?,@Query("tax_amount") taxAmount:String?):CreateOrderIdRoot
 }

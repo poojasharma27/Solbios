@@ -26,9 +26,9 @@ class PaymentViewModel @Inject constructor( val repository: PaymentRepository):V
     val apiStateOrderId: StateFlow<ApiState> by lazy {
         _apiStateOrderId
     }
-        fun getOrderId(header:String?,amount:String?){
+        fun getOrderId(header:String?,amount:String?,taxAmount:String?){
         viewModelScope.launch {
-            repository.getOrderId(header,amount).onStart {
+            repository.getOrderId(header,amount,taxAmount).onStart {
                 _apiState.value=ApiState.Loading
                 progressVisibility.set(true)
 
@@ -45,9 +45,9 @@ class PaymentViewModel @Inject constructor( val repository: PaymentRepository):V
         }
     }
 
-    fun createOrderId(view: View, header: String?, amount: String?, addressId:Int?, orderId:String?, paymentType:Int?, transactionId:String?,status:Int?,reason:String?){
+    fun createOrderId(view: View, header: String?, amount: String?, addressId:Int?, orderId:String?, paymentType:Int?, transactionId:String?,status:Int?,reason:String?,taxAmount:String?){
         viewModelScope.launch {
-            repository.createOrderId(header,amount,addressId,orderId,paymentType,transactionId,status,reason).onStart {
+            repository.createOrderId(header,amount,addressId,orderId,paymentType,transactionId,status,reason,taxAmount).onStart {
                 _apiStateOrderId.value=ApiState.Loading
                 progressVisibility.set(true)
 

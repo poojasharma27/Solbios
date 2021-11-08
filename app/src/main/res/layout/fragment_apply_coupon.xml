@@ -33,17 +33,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/rectangle">
 
-        <EditText
-            android:id="@+id/searchViewEditText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/margin8"
-            android:fontFamily="@font/p_regular"
-            android:hint="Enter coupon code"
-            android:ellipsize="start"
-             android:background="@null"
-           />
+            <EditText
+                android:id="@+id/searchViewEditText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/margin8"
+                android:background="@null"
+                android:ellipsize="start"
+                android:fontFamily="@font/p_regular"
+                android:hint="Enter coupon code" />
             <TextView
+                android:id="@+id/applyCouponTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

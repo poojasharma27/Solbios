@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/nointernet" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/oops"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/p_bold"
+            android:textSize="@dimen/textSize18"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/no_internet_please_try_again"
+            android:layout_gravity="center_horizontal|center"
+            android:fontFamily="@font/p_regular"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/margin8"
+            android:textSize="@dimen/textSize16"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/purple_500"
+            android:padding="@dimen/margin16"
+            android:layout_marginTop="@dimen/margin8"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/p_bold"
+            android:text="@string/again"/>
+
+
+    </LinearLayout>
+</layout>

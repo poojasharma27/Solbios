@@ -14,9 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:fontFamily="@font/p_bold"
+        android:fontFamily="@font/p_regular"
         android:textColor="@color/black"
-        android:textSize="@dimen/textSize16"
+        android:textSize="@dimen/textSize14"
         android:layout_margin="@dimen/margin8"
         android:layout_toEndOf="@id/profileImageView"/>
 

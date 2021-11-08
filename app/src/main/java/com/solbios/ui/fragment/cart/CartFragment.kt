@@ -43,7 +43,7 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
     val cartList= mutableListOf<Data>()
     var total = 0;
     var adapter:CartAdapter?=null
-
+    var taxAmount=0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -105,15 +105,17 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
                     setCartItem(cartList)
                     totalItemTextView.text = "Total Item (" + it.total.toString() + ")"
                     total=0
+
                     for ( i in 0 until  cartList.size){
 
                         total=total.plus(cartList[i].total_product_price)
 
                     }
 
-                    priceTextView.text= "\u20B9"+total.toString()
                     itemPriceTextView.text="\u20B9"+total.toString()
-                    paidPriceTextView.text="\u20B9"+total.toString()
+
+                    priceTextView.text= "\u20B9"+total
+                    paidPriceTextView.text="\u20B9"+total
                 }
 
 
@@ -178,17 +180,16 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
     override fun addOnItem(action: Int?, position: Int) {
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),cartList[position].product_id,action)
        total= total.plus(cartList[position].get_product.sales_price)
-        priceTextView.text="\u20B9"+total
         itemPriceTextView.text="\u20B9"+total
+        priceTextView.text= "\u20B9"+total
         paidPriceTextView.text="\u20B9"+total
-
     }
 
     override fun removeOnItem(action: Int?, position: Int) {
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),cartList[position].product_id,action)
         total= total.minus(cartList[position].get_product.sales_price)
-          priceTextView.text="\u20B9"+total
         itemPriceTextView.text="\u20B9"+total
+        priceTextView.text= "\u20B9"+total
         paidPriceTextView.text="\u20B9"+total
 
 

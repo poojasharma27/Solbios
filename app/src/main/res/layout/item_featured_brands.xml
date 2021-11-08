@@ -25,18 +25,18 @@
             android:src="@drawable/pills" />
 
         <TextView
-            android:layout_width="96dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="105dp"
-            android:background="@drawable/ic_brand_background"
+            android:layout_marginBottom="@dimen/margin8"
             android:fontFamily="@font/p_bold"
             android:padding="6dp"
-            android:textAlignment="center"
-            android:layout_marginBottom="@dimen/margin8"
+            android:visibility="gone"
             android:text="@{viewModel.title}"
+            android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="9sp" />
+            android:textSize="@dimen/textSize12" />
 
 
     </RelativeLayout>

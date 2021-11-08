@@ -24,7 +24,66 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/margin48"/>
+          <RelativeLayout
+         android:id="@+id/recentSearchRelativeLayout"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="@dimen/margin48"
+         app:layout_constraintTop_toTopOf="parent">
+         <TextView
+             android:id="@+id/recentTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/recent_searches"
+             android:layout_margin="@dimen/margin8"
+             android:fontFamily="@font/p_bold"
+             />
+       <TextView
+             android:id="@+id/clearAllTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/clear_all"
+           android:layout_alignParentEnd="true"
+           android:layout_margin="@dimen/margin8"
+             android:fontFamily="@font/p_bold"
+           android:textColor="@color/purple_500"
+             />
 
+
+         <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/recentSearchRecyclerView"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+             android:orientation="vertical"
+             android:layout_below="@id/recentTextView"
+            />
+
+
+
+     </RelativeLayout>
+        <TextView
+            android:id="@+id/trendingProductsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trendn_gproducts"
+            app:layout_constraintTop_toBottomOf="@id/recentSearchRelativeLayout"
+            android:fontFamily="@font/p_bold"
+            android:textSize="@dimen/textSize18"
+            android:layout_marginTop="@dimen/margin8"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/margin16"
+            android:textColor="@color/black"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trendingProductsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/trendingProductsTextView"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin8"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <ImageView
             android:id="@+id/noProductImageView"

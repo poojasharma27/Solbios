@@ -89,6 +89,10 @@ class ProductListDescription : Fragment(),PacketSizeAdapter.PacketSizeListener {
         cartImageView.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_productListDescription_to_cartFragment)
         }
+        addItemTextView.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_productListDescription_to_cartFragment)
+
+        }
 
     }
 

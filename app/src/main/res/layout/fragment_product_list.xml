@@ -174,5 +174,55 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:background="@drawable/ic_bottom_drawable"
+            android:id="@+id/relativeLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="@dimen/margin8"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/itemSizeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="5dp"
+                android:text="0 Item"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize16" />
+            <TextView
+                android:id="@+id/salePriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin8"
+                android:layout_marginTop="2dp"
+                android:text="@string/price"
+                android:textStyle="bold"
+                android:layout_below="@id/itemSizeTextView"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize16" />
+
+            <TextView
+                android:id="@+id/goToCartTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin16"
+                android:layout_marginTop="@dimen/margin16"
+                android:layout_marginEnd="@dimen/margin16"
+                android:background="@color/purple_500"
+                android:fontFamily="@font/p_bold"
+                android:padding="@dimen/margin8"
+                android:paddingStart="@dimen/margin24"
+                android:paddingEnd="@dimen/margin24"
+                android:text="@string/go_to_cart"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </RelativeLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -30,8 +30,9 @@ class SearchViewModel @Inject constructor( val searchRepository: SearchRepositor
 
             }.collect {
                 _apiState.value=ApiState.Success(it)
-                if (it.total==0){
+                if (it.total==0 && it.trending_product.isEmpty()){
                   noSearch.set(true)
+
                 }else{
                     noSearch.set(false)
                 }

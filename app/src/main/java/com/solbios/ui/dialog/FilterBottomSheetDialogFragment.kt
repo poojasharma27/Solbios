@@ -33,9 +33,10 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
     private var binding: LayoutFilterBottomSheetBinding?=null
     private  val viewModel:FilterBottomSheetDialogViewModel by viewModels()
 
-    var catId=ArrayList<Int>()
-    //var catId:Int?=null
-   var brandIdList= ArrayList<Int>()
+    //var catId=ArrayList<Int>()
+    var catId:Int?=null
+        //var brandIdList= ArrayList<Int>()
+    var brandIdList:Int?=null
      var pos:Int?=null
 
 
@@ -58,33 +59,38 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         crossOnClickListener()
-        if(ProductListFragment.categoryList.isEmpty()&&ProductListFragment.brandList.isEmpty()) {
+      /*  if(ProductListFragment.categoryList.isEmpty()&&ProductListFragment.brandList.isEmpty()) {
             viewModel.getFilter()
         }else{
-         setCategory(ProductListFragment.categoryList)
+           setCategory(ProductListFragment.categoryList)
             setBrand(ProductListFragment.brandList)
-        }
+        }*/
         setSelected()
-        startJob()
+        //startJob()
+        setCategory(ProductListFragment.categoryList)
+        setBrand(ProductListFragment.brandList)
 
-    applyTextView.setOnClickListener {
-         if(catId.isEmpty()){
-
+      applyTextView.setOnClickListener {
+       val brandId=brandIdList
+          val id = catId
+          callBacklistener?.onBrandsSelected(brandId.toString(),Integer.parseInt(id.toString()))
+          callBacklistener?.onCategorySelected(Integer.parseInt(id.toString()),brandId.toString())
+       /*  if(catId==null){
             val brandId=brandIdList
             callBacklistener?.onBrandsSelected(brandId.toString())
          }else {
              val id = catId
              callBacklistener?.onCategorySelected(Integer.parseInt(id.toString()))
 
-         }
+        } */
         dialog?.dismiss()
-
      }
     clearTextView.setOnClickListener {
-        brandIdList.clear()
+      //  brandIdList.clear()
         pos?.let {
             ProductListFragment.brandList[it].selected =false
         }
+
         dialog?.dismiss()
     }
     }
@@ -162,15 +168,16 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
     }
 
     override fun onViewClicked(view: View, position: Int) {
-       // catId=ProductListFragment.categoryList[position].id
-      catId.add( ProductListFragment.categoryList[position].id)
+        catId=ProductListFragment.categoryList[position].id
+    //  catId.add( ProductListFragment.categoryList[position].id)
         ProductListFragment.categoryList[position].selected = !ProductListFragment.categoryList[position].selected
 
     }
 
     override fun onBrandViewClicked(view: View, position: Int) {
         pos=position
-        brandIdList .add (ProductListFragment.brandList[position].id)
+        brandIdList=ProductListFragment.brandList[position].id
+       // brandIdList .add (ProductListFragment.brandList[position].id)
         ProductListFragment.brandList[position].selected = !ProductListFragment.brandList[position].selected
         Log.e("TAG", "onBrandViewClicked:$brandIdList ",)
 
@@ -207,9 +214,8 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
 
 
     interface CallbackListener {
-
-        fun onBrandsSelected(brandIdList: String)
-        fun onCategorySelected(catIdList: Int)
+        fun onBrandsSelected(brandIdList: String,catIdList: Int)
+        fun onCategorySelected(catIdList: Int,brandIdList: String)
     }
 
 

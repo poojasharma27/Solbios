@@ -81,6 +81,8 @@ class OrderDetailsFragment : Fragment(){
         orderDeliveredTextView.text=it.data.current_status.title
         orderIdValueTextView.text=it.data.order_id
         orderIdsValueTextView.text=it.data.order_id
+        transactionValueTextView.text=it.data.transaction_id
+        paymentValueTextView.text=it.data.format_payment_type
         orderDateValueTextView.text=it.data.format_created_at
         deliveryOnTextView.text=it.data.format_created_at
         numberTextView.text=it.data.pickup_address.contact_number.toString()

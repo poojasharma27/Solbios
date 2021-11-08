@@ -13,5 +13,6 @@ data class Data(
     val total_amount: Int,
     val transaction_id: String,
     val updated_at: String,
-    val user_id: Int
+    val user_id: Int,
+    val products_count: Int
 )

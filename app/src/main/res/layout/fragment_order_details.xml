@@ -179,7 +179,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/itemsRelativeLayout"
-                        android:layout_margin="@dimen/margin16"
                         android:layout_marginStart="@dimen/margin16"
                         android:layout_marginTop="@dimen/margin16"
                         android:layout_marginEnd="@dimen/margin16"
@@ -196,8 +195,8 @@
                             android:layout_marginBottom="@dimen/margin8"
                             android:fontFamily="@font/p_bold"
                             android:text="@string/order_details"
-                            android:textSize="@dimen/textSize18"
-                            android:textColor="@color/black" />
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textSize18" />
 
                         <TextView
                             android:id="@+id/orderIdsTextView"
@@ -256,11 +255,63 @@
                             android:gravity="center"
                             android:text="" />
 
+                        <TextView
+                            android:id="@+id/paymentTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderDateTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawableStart="@drawable/payment_method"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/payment_type" />
+
+                        <TextView
+                            android:id="@+id/paymentValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/orderDateTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="" />
+                        <TextView
+                            android:id="@+id/transactionTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/paymentTextView"
+                            android:layout_marginStart="@dimen/margin8"
+                            android:layout_marginTop="@dimen/margin8"
+                            android:layout_marginEnd="@dimen/margin8"
+                            android:layout_marginBottom="@dimen/margin8"
+                            android:drawableStart="@drawable/transaction_id"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="@string/transaction_id" />
+
+                        <TextView
+                            android:id="@+id/transactionValueTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/paymentTextView"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/margin8"
+                            android:drawablePadding="@dimen/margin5"
+                            android:fontFamily="@font/p_bold"
+                            android:gravity="center"
+                            android:text="" />
                         <View
                             android:id="@+id/backgroundView"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_below="@id/orderDateTextView"
+                            android:layout_below="@id/transactionTextView"
                             android:layout_marginTop="@dimen/margin8"
                             android:background="@color/gray" />
 
@@ -286,9 +337,9 @@
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/margin8"
                             android:drawablePadding="@dimen/margin5"
-                            android:textColor="@color/black"
                             android:gravity="center"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/couponTotalTextView"
@@ -313,8 +364,8 @@
                             android:layout_margin="@dimen/margin8"
                             android:drawablePadding="@dimen/margin5"
                             android:gravity="center"
-                            android:textColor="@color/black"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/black" />
 
                         <TextView
                             android:id="@+id/totalTextView"
@@ -341,8 +392,8 @@
                             android:layout_margin="@dimen/margin8"
                             android:drawablePadding="@dimen/margin5"
                             android:gravity="center"
-                            android:textColor="@color/black"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/black" />
 
                         <View
                             android:id="@+id/backgroundView1"

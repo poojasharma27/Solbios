@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import com.firstapp.sharedPreference.SessionManagement
 import com.solbios.databinding.FragmentApplyCouponBinding
 import com.solbios.model.cart.applycoupon.ApplyCouponData
@@ -54,6 +53,19 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
         setToolBar()
         startCouponJob()
         errorThrow()
+        applyForSearch()
+    }
+
+    private fun applyForSearch() {
+    applyCouponTextView.setOnClickListener {
+        var search=searchViewEditText.text.toString()
+        if (search!=""){
+            viewModel.getCoupon("Bearer"+" "+sessionManagement?.getToken(),searchViewEditText.text.toString())
+        }else{
+           Toast.makeText(context,"Please Enter Coupon Code",Toast.LENGTH_LONG).show()
+
+        }
+    }
     }
 
     private fun setToolBar() {
@@ -87,7 +99,6 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
 
                 }
 
-
             }
 
         }
@@ -120,7 +131,6 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
             }
             is ApiState.Success<*> -> {
                 (state.data as? CouponRoot)?.let {
-
                     Log.e("coupon",it.data.discount_amount.toString())
                 }
 

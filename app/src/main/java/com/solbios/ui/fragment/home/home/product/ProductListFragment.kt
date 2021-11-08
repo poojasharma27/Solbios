@@ -47,7 +47,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
     var totalItemCount:Int = 0
     lateinit var layoutManager :LinearLayoutManager
    var sessionManagement: SessionManagement?=null
-
+   var cartTotalPrice:Double=0.0
     var page:Int=1
 
     override fun onCreateView(
@@ -70,8 +70,8 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)
         sortByOnClickListener()
         filterOnClickListener()
-
-
+  startFilterJob()
+        viewModel.getFilter()
         startAddToCartJob()
 
 
@@ -122,6 +122,10 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         cartImageView.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_productListFragment_to_cartFragment)
         }
+        goToCartTextView.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_productListFragment_to_cartFragment)
+
+        }
     }
 
     companion object {
@@ -133,12 +137,14 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
   var filterBottomSheet : FilterBottomSheetDialogFragment? = null
     private fun filterOnClickListener() {
         filterBottomSheet = FilterBottomSheetDialogFragment(object : FilterBottomSheetDialogFragment.CallbackListener{
-            override fun onBrandsSelected(brandIdList: String) {
+            override fun onBrandsSelected(brandIdList: String,catIdList: Int) {
                 viewModel.brandId=brandIdList
+                viewModel.data=catIdList.toString()
                 viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)            }
 
-            override fun onCategorySelected(catIdList: Int) {
+            override fun onCategorySelected(catIdList: Int,brandIdList: String) {
                 viewModel.data=catIdList.toString()
+                viewModel.brandId=brandIdList
                 viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)            }
 
         })
@@ -196,7 +202,8 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
                     allProductDeatilsTextView.text=it.total.toString()+" "+"products available "
                    pagination(it.next_page)
                     setBadge(it.cart_total)
-
+                   setItem(it.cart_total,it.cart_total_amount.toDouble())
+                 cartTotalPrice=it.cart_total_amount.toDouble()
                 }
 
 
@@ -204,6 +211,17 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
 
         }
     }
+
+    private fun setItem(cartTotal: Int,total:Double) {
+     if (cartTotal==0){
+         relativeLayout.visibility=View.INVISIBLE
+     }else{
+       itemSizeTextView.text=cartTotal.toString()+" "+"Item"
+         salePriceTextView.text="\u20b9"+total.toString()
+         relativeLayout.visibility=View.VISIBLE
+     }
+    }
+
     lateinit var addtoCartJob:Job
     fun updateAddToCartUi(state: ApiState){
         when(state){
@@ -219,6 +237,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
             is ApiState.Success<*> -> {
                 (state.data as? AddToCartRoot)?.let {
                   setBadge(it.data.cart_total)
+                   setItem(it.data.cart_total,cartTotalPrice)
 
                 }
 
@@ -274,14 +293,50 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
 
 
     override fun addOnItem(action: Int?, position: Int) {
-     viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
-
+        cartTotalPrice=cartTotalPrice.plus(productList[position].sales_price)
+        viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
     }
 
     override fun removeOnItem(action: Int?, position: Int) {
         startAddToCartJob()
+        cartTotalPrice=cartTotalPrice.minus(productList[position].sales_price)
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),productList[position].id,action)
 
     }
 
+    private  lateinit var filterJob : Job
+    fun updateFilterUi(state: ApiState){
+        when(state){
+            ApiState.Empty -> {
+
+            }
+            is ApiState.Failure -> {
+                Log.d("TAG", "updateUi: ")
+            }
+            ApiState.Loading -> {
+                Log.d("TAG", "updateUi: ")
+            }
+            is ApiState.Success<*> -> {
+                (state.data as? com.solbios.model.filter.Data)?.let {
+                    categoryList.clear()
+                    brandList.clear()
+                    categoryList.addAll(it.categories)
+                    brandList.addAll(it.brands)
+                }
+
+
+            }
+
+        }
+    }
+    private fun startFilterJob() {
+        filterJob =  lifecycleScope.launch {
+            viewModel.apiStateFilter.collect {
+                updateFilterUi(it)
+
+            }
+        }
+
+        filterJob.start()
+    }
 }
