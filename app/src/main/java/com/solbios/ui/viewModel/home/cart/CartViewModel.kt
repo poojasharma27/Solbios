@@ -2,10 +2,12 @@ package com.solbios.ui.viewModel.home.cart
 
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.solbios.R
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.network.ApiState
 import com.solbios.ui.fragment.cart.CartRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,11 +16,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartViewModel @Inject constructor(val repository: CartRepository) : ViewModel() {
+class CartViewModel @Inject constructor(val repository: CartRepository ,val stateHandle: SavedStateHandle) : ViewModel() {
     private val _apiState= MutableStateFlow<ApiState>(ApiState.Empty)
     var progressVisibility = ObservableField(false)
     var screenVisibility = ObservableField(false)
     var noCartItemVisibility = ObservableField(false)
+    var couponCode=stateHandle.get<CouponData>("couponCode")
+
 
     val apiState: StateFlow<ApiState> by lazy {
         _apiState

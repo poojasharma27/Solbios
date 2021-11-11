@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.solbios.R
 import com.solbios.databinding.FragmentPaymentFailureBinding
+import com.solbios.other.internetCheck
 import kotlinx.android.synthetic.main.fragment_payment_failure.*
 
 class PaymentFailureFragment :Fragment() {
@@ -20,6 +21,8 @@ class PaymentFailureFragment :Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentPaymentFailureBinding.inflate(layoutInflater)
+        internetCheck(context)
+
         return binding?.root
     }
 

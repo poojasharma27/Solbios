@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.solbios.databinding.LayoutShortBottomSheetBinding
+import com.solbios.other.internetCheck
 import kotlinx.android.synthetic.main.layout_filter_bottom_sheet.*
 import kotlinx.android.synthetic.main.layout_filter_bottom_sheet.clearImageView
 import kotlinx.android.synthetic.main.layout_short_bottom_sheet.*
@@ -25,6 +26,7 @@ class ShortBottomSheetDialogFragment( private  var sortListener: SortListener): 
         savedInstanceState: Bundle?
     ): View? {
         binding= LayoutShortBottomSheetBinding.inflate(layoutInflater)
+        internetCheck(context)
         return binding?.root
     }
 

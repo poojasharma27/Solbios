@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.solbios.other.Constants
 import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.layout_toolbar_name.*
 import androidx.fragment.app.viewModels
@@ -21,8 +20,7 @@ import com.solbios.databinding.FragmentPaymentBinding
 import com.solbios.model.orderId.OrderIdRoot
 import com.solbios.model.paymentCreateOrder.CreateOrderIdRoot
 import com.solbios.network.ApiState
-import com.solbios.other.Failure
-import com.solbios.other.Success
+import com.solbios.other.*
 import com.solbios.ui.AuthActivity
 import com.solbios.ui.viewModel.home.payment.PaymentViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +48,8 @@ class PaymentFragment : Fragment() {
     ): View? {
         binding= FragmentPaymentBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
   private  val paymentSuccess: PaymentSuccessFragment?=null
@@ -111,7 +111,12 @@ class PaymentFragment : Fragment() {
         }
         locationTextView.text = Constants.paymentDetails
         confirmPaymentTextView.setOnClickListener {
-            setCheckRadioButton(view)
+            if( context?.let{ isNetworkAvailable(it) }==true) {
+                setCheckRadioButton(view)
+            }
+            else{
+                toast(context)
+            }
            }
            startJob()
         startCreateOrderIdJob()

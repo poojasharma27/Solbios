@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.firstapp.sharedPreference.SessionManagement
 import com.solbios.R
 import com.solbios.databinding.FragmentSplashBinding
+import com.solbios.other.internetCheck
 
 class SplashFragment :Fragment() {
 
@@ -29,6 +30,7 @@ class SplashFragment :Fragment() {
         animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         binding?.logoImageView?.animation=animation
         sessionManagement= context?.let { SessionManagement(it) }!!
+        internetCheck(context)
 
         return binding?.root
     }

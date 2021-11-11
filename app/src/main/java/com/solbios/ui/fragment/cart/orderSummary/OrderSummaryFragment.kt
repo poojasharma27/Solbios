@@ -15,6 +15,9 @@ import com.solbios.model.orderSummary.CartData
 import com.solbios.model.orderSummary.OrderSummaryRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
+import com.solbios.other.toast
 import com.solbios.ui.adapter.OrderSummaryAdapter
 import com.solbios.ui.viewModel.home.orderSummary.OrderSummaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +45,8 @@ class OrderSummaryFragment : Fragment() {
     ): View? {
          binding= FragmentOrderSummaryBinding.inflate(layoutInflater)
           binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 
@@ -51,9 +56,17 @@ class OrderSummaryFragment : Fragment() {
         setToolbar()
         startJob()
         sessionManagement= context?.let { SessionManagement(it) }
-        viewModel.orderSummary("Bearer"+" "+sessionManagement?.getToken())
+        orderSummary()
     }
 
+    fun orderSummary(){
+        if( context?.let{ isNetworkAvailable(it) }==true) {
+            viewModel.orderSummary("Bearer"+" "+sessionManagement?.getToken())
+
+        }else{
+            toast(context)
+        }
+    }
 
     private fun setToolbar() {
         backImageView.setOnClickListener {
@@ -62,8 +75,12 @@ class OrderSummaryFragment : Fragment() {
         locationTextView.text = Constants.orderSummary
 
         confirmTextView.setOnClickListener {
-            val addressId: Int =viewModel.id!!
-            Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId,itemTotalPrice,priceDiscount,toBePaidPrice,taxAmount))
+            if( context?.let{ isNetworkAvailable(it) }==true) {
+                val addressId: Int = viewModel.id!!
+                Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId, itemTotalPrice, priceDiscount, toBePaidPrice, taxAmount))
+            }else{
+                toast(context)
+            }
         }
         changeTextView.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_orderSummaryFragment_to_selectAddressFragment)

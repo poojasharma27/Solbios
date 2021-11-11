@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.solbios.databinding.FragmentResetPasswordBinding
 import com.solbios.other.Constants
 import com.solbios.other.Constants.Enter_confirmPassword
+import com.solbios.other.internetCheck
 import com.solbios.ui.viewModel.authviewmodel.ResetPasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_reset_password.*
@@ -28,6 +29,7 @@ class ResetPasswordFragment :Fragment() {
     ): View? {
         binding= FragmentResetPasswordBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
         errorThrow()
         validation()
         return binding?.root

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.solbios.ui.viewModel.home.searchViewModel.SearchViewModel" />
@@ -13,77 +15,76 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include
-            layout="@layout/layout_search_toolbar"/>
+
+        <include layout="@layout/layout_search_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/searchRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/margin48"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/margin48"/>
-          <RelativeLayout
-         android:id="@+id/recentSearchRelativeLayout"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="@dimen/margin48"
-         app:layout_constraintTop_toTopOf="parent">
-         <TextView
-             android:id="@+id/recentTextView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/recent_searches"
-             android:layout_margin="@dimen/margin8"
-             android:fontFamily="@font/p_bold"
-             />
-       <TextView
-             android:id="@+id/clearAllTextView"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/clear_all"
-           android:layout_alignParentEnd="true"
-           android:layout_margin="@dimen/margin8"
-             android:fontFamily="@font/p_bold"
-           android:textColor="@color/purple_500"
-             />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/recentSearchRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin48"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/recentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/recent_searches" />
+
+            <TextView
+                android:id="@+id/clearAllTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/margin8"
+                android:fontFamily="@font/p_bold"
+                android:text="@string/clear_all"
+                android:textColor="@color/purple_500" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentSearchRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recentTextView"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-         <androidx.recyclerview.widget.RecyclerView
-             android:id="@+id/recentSearchRecyclerView"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-             android:orientation="vertical"
-             android:layout_below="@id/recentTextView"
-            />
+        </RelativeLayout>
 
-
-
-     </RelativeLayout>
         <TextView
             android:id="@+id/trendingProductsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/trendn_gproducts"
-            app:layout_constraintTop_toBottomOf="@id/recentSearchRelativeLayout"
-            android:fontFamily="@font/p_bold"
-            android:textSize="@dimen/textSize18"
-            android:layout_marginTop="@dimen/margin8"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="@dimen/margin16"
-            android:textColor="@color/black"/>
+            android:layout_marginTop="@dimen/margin8"
+            android:fontFamily="@font/p_bold"
+            android:text="@string/trending_products"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recentSearchRelativeLayout" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/trendingProductsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/trendingProductsTextView"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/margin8"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/trendingProductsTextView" />
 
         <ImageView
             android:id="@+id/noProductImageView"
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/noresultfound"
+            android:src="@drawable/no_result_found"
             android:visibility="@{viewModel.noSearch?View.VISIBLE:View.GONE, default = gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,5 +100,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.progressVisibility?View.VISIBLE:View.GONE, default = gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

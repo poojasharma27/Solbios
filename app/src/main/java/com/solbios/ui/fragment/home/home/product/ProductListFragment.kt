@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,10 +27,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.RecyclerView
 import com.firstapp.sharedPreference.SessionManagement
+import com.solbios.databinding.ActivityNoInternetBinding
 import com.solbios.databinding.FragmentProductListBinding
 import com.solbios.model.addtocart.AddToCartRoot
 import com.solbios.model.filter.Brand
 import com.solbios.model.filter.Category
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
 import kotlinx.android.synthetic.main.layout_toolbar_with_search.cartImageView
 import kotlinx.android.synthetic.main.layout_toolbar_with_search.locationTextView
 import kotlin.collections.ArrayList
@@ -49,16 +53,24 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
    var sessionManagement: SessionManagement?=null
    var cartTotalPrice:Double=0.0
     var page:Int=1
+    private var noBinding: ActivityNoInternetBinding?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding= FragmentProductListBinding.inflate(layoutInflater)
-        binding.viewModel=viewModel
+
+            val binding = FragmentProductListBinding.inflate(layoutInflater)
+            binding.viewModel = viewModel
+        internetCheck(context)
+
         return binding?.root
+
+
     }
+
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,7 +82,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
         viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)
         sortByOnClickListener()
         filterOnClickListener()
-  startFilterJob()
+         startFilterJob()
         viewModel.getFilter()
         startAddToCartJob()
 
@@ -137,7 +149,7 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
   var filterBottomSheet : FilterBottomSheetDialogFragment? = null
     private fun filterOnClickListener() {
         filterBottomSheet = FilterBottomSheetDialogFragment(object : FilterBottomSheetDialogFragment.CallbackListener{
-            override fun onBrandsSelected(brandIdList: String,catIdList: Int) {
+            override fun onBrandsSelected(brandIdList: String,catIdList: String) {
                 viewModel.brandId=brandIdList
                 viewModel.data=catIdList.toString()
                 viewModel.getProductList("Bearer"+" "+sessionManagement?.getToken(),page)            }
@@ -284,10 +296,11 @@ class ProductListFragment : Fragment(),ProductListAdapter.ItemClickListener {
     }
    fun setProductList(list:List<Data>){
        val adapter=ProductListAdapter(list,this)
-       productListRecyclerView.adapter=adapter
-       layoutManager=LinearLayoutManager(context)
-       productListRecyclerView.layoutManager=layoutManager
-
+       if (adapter!=null) {
+           productListRecyclerView.adapter = adapter
+           layoutManager = LinearLayoutManager(context)
+           productListRecyclerView.layoutManager = layoutManager
+       }
    }
 
 

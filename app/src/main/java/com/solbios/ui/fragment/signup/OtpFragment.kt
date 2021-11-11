@@ -15,6 +15,7 @@ import com.solbios.model.OtpData
 import com.solbios.network.ApiState
 import com.solbios.other.Constants.Enter_otp
 import com.solbios.other.Constants.Otp
+import com.solbios.other.internetCheck
 import com.solbios.ui.viewModel.authviewmodel.OtpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_otp.*
@@ -35,6 +36,7 @@ class OtpFragment : Fragment() {
     ): View? {
         binding= FragmentOtpBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
         startJob()
         errorThrow()
         validation()

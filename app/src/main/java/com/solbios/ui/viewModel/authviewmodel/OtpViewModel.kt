@@ -76,12 +76,16 @@ class OtpViewModel @Inject constructor( val repository: OtpRepository, val state
 
             }.catch {e->
                 val error= (e as? HttpException)?.response()?.errorBody()?.string()
-                var obj = JSONObject(error)
-                var name= obj["message"]
-                _apiState.value = ApiState.Failure(e)
-                progressVisibility.set(false)
-                errorThrow.value=name.toString()
-
+                if (error!=null) {
+                    var obj = JSONObject(error)
+                    var name = obj["message"]
+                    _apiState.value = ApiState.Failure(e)
+                    progressVisibility.set(false)
+                    errorThrow.value = name.toString()
+                }
+                else{
+                    errorThrow.value="You are offline. Please check your internet connection"
+                }
             }.collect {
                 _apiState.value = ApiState.Success(it.data)
 
@@ -102,11 +106,17 @@ class OtpViewModel @Inject constructor( val repository: OtpRepository, val state
 
             }.catch {e->
                 val error= (e as? HttpException)?.response()?.errorBody()?.string()
+                if (error!=null){
                 var obj = JSONObject(error)
                 var name= obj["message"]
                 _apiState.value = ApiState.Failure(e)
                 progressVisibility.set(false)
                 errorThrow.value=name.toString()
+            }  else{
+            errorThrow.value = "You are offline. Please check your internet connection"
+                    progressVisibility.set(false)
+
+                }
 
             }.collect {
                 _apiState.value = ApiState.Success(it.data)

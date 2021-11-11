@@ -19,6 +19,7 @@ import com.solbios.model.search.Data
 import com.solbios.model.search.SearchRoot
 import com.solbios.model.search.TrendingProduct
 import com.solbios.network.ApiState
+import com.solbios.other.internetCheck
 import com.solbios.ui.adapter.RecentSearchAdapter
 import com.solbios.ui.adapter.SearchAdapter
 import com.solbios.ui.adapter.TrendingAdapter
@@ -33,17 +34,16 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
-    RecentSearchAdapter.OnRecentSearchItem {
+class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,TrendingAdapter.OnTrendingItemClickListener,RecentSearchAdapter.OnRecentSearchItem {
 
     private var binding: FragmentSearchBinding? = null
     private val viewModel: SearchViewModel by viewModels()
     var sessionManagement: SessionManagement? = null
     var adapter: RecentSearchAdapter? = null
-    val searchList = mutableListOf<Data>()
-    val trendingProductsList = mutableListOf<TrendingProduct>()
-    var searchDataEntity: List<SearchData?>? = null
-    var searchValue: String? = null
+   private val searchList = mutableListOf<Data>()
+  private  val trendingProductsList = mutableListOf<TrendingProduct>()
+  private  var searchDataEntity: List<SearchData?>? = null
+   private var searchValue: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +52,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
     ): View? {
         binding = FragmentSearchBinding.inflate(layoutInflater)
         binding?.viewModel = viewModel
+        internetCheck(context)
         return binding?.root
     }
 
@@ -87,7 +88,11 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
                 searchRecyclerView.visibility = View.VISIBLE
 
             }
-            searchValue = it.toString()
+            if (searchValue!=null) {
+                searchValue = it.toString()
+            }else{
+                searchValue=null
+            }
         }
         startJob()
         clearAllTextView.setOnClickListener {
@@ -102,7 +107,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
 
     }
 
-    lateinit var searchJob: Job
+   private lateinit var searchJob: Job
 
     private fun startJob() {
         searchJob = lifecycleScope.launch {
@@ -143,7 +148,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
     }
 
     private fun setTrendingList(trendingProductsList: List<TrendingProduct>) {
-        val adapter = TrendingAdapter(trendingProductsList)
+        val adapter = TrendingAdapter(trendingProductsList,this)
         trendingProductsRecyclerView.adapter = adapter
     }
 
@@ -168,10 +173,10 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
                 searchEntityList.add(item.toSearchDataEntity())
             }
             context?.let {
-                val SearchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
+                val searchDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
                     ?.addDetails(searchEntityList)
 
-                Log.d("articleEntity", SearchDataEntity.toString())
+                Log.d("articleEntity", searchDataEntity.toString())
             }
 
         }
@@ -207,7 +212,7 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
 
 
     private fun setRecentText(searchDataEntity: List<SearchData?>?) {
-        if (searchDataEntity?.size != 0 && searchValue==null) {
+        if (searchDataEntity?.size != 0  && searchValue==null) {
             recentSearchRelativeLayout.visibility = View.VISIBLE
         } else {
             recentSearchRelativeLayout.visibility = View.INVISIBLE
@@ -225,6 +230,10 @@ class SearchFragment : Fragment(), SearchAdapter.OnSearchItemClickListener,
         Navigation.findNavController(view)
             .navigate(SearchFragmentDirections.actionSearchFragmentToProductListDescription(id!!))
 
+    }
+
+    override fun trendingItemClickListener(view: View, position: Int) {
+        Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToProductListDescription(trendingProductsList[position].id))
     }
 
 

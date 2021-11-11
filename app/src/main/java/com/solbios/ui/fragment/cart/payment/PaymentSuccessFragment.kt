@@ -9,6 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.solbios.R
 import com.solbios.databinding.FragmentPaymentSuccessBinding
+import com.solbios.other.internetCheck
 import kotlinx.android.synthetic.main.fragment_payment_success.*
 
 class PaymentSuccessFragment : Fragment()  {
@@ -21,6 +22,8 @@ class PaymentSuccessFragment : Fragment()  {
         savedInstanceState: Bundle?
     ): View? {
         binding= FragmentPaymentSuccessBinding.inflate(layoutInflater)
+        internetCheck(context)
+
         return binding?.root
     }
 

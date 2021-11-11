@@ -14,6 +14,7 @@ import com.solbios.model.orderDetails.OrderDetailsRoot
 import com.solbios.model.orderDetails.Product
 import com.solbios.model.orderSummary.OrderSummaryRoot
 import com.solbios.network.ApiState
+import com.solbios.other.internetCheck
 import com.solbios.ui.adapter.OrderDetailsAdapter
 import com.solbios.ui.viewModel.home.orderSummary.OrderDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,8 @@ class OrderDetailsFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
       binding= FragmentOrderDetailsBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 

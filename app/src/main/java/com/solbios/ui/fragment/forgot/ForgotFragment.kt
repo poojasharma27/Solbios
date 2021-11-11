@@ -12,6 +12,7 @@ import androidx.navigation.Navigation
 import com.solbios.R
 import com.solbios.databinding.FragmentForgotBinding
 import com.solbios.other.Constants
+import com.solbios.other.internetCheck
 import com.solbios.ui.viewModel.authviewmodel.ForgotViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_forgot.*
@@ -29,6 +30,8 @@ class ForgotFragment :Fragment() {
     ): View? {
         binding = FragmentForgotBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         errorThorw()
         validation()
         return binding?.root

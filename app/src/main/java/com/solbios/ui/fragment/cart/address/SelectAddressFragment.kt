@@ -20,6 +20,9 @@ import com.solbios.model.selectAddress.Data
 import com.solbios.model.selectAddress.SelectAddressRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants.selectAddress
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
+import com.solbios.other.toast
 import com.solbios.ui.adapter.SelectAddressAdapter
 import com.solbios.ui.viewModel.home.address.SelectAddressViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,6 +49,8 @@ class SelectAddressFragment : Fragment(),SelectAddressAdapter.OnItemClickListene
     ): View? {
         binding= FragmentSelectAddressBinding.inflate(layoutInflater)
           binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 
@@ -70,13 +75,19 @@ class SelectAddressFragment : Fragment(),SelectAddressAdapter.OnItemClickListene
           it.findNavController().navigate(action)
       }
         continueTextView.setOnClickListener {
-            if (addressPosition==null){
-                Toast.makeText(activity,"Please select address",Toast.LENGTH_LONG).show()
+            if( context?.let{ isNetworkAvailable(it) }==true) {
+                if (addressPosition == null) {
+                    Toast.makeText(activity, "Please select address", Toast.LENGTH_LONG).show()
 
-            }else{
-                val id =selectAddressList[addressPosition!!].id
-                Navigation.findNavController(it).navigate(SelectAddressFragmentDirections.actionSelectAddressFragmentToOrderSummaryFragment(id))
+                } else {
+                    val id = selectAddressList[addressPosition!!].id
+                    Navigation.findNavController(it).navigate(SelectAddressFragmentDirections.actionSelectAddressFragmentToOrderSummaryFragment(id)
+                    )
 
+                }
+            }
+            else{
+                toast(context)
             }
 
         }

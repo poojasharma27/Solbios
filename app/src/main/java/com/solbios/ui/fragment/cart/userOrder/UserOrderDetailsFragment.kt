@@ -18,6 +18,9 @@ import com.solbios.model.userOrder.Data
 import com.solbios.model.userOrder.UserOrderRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
+import com.solbios.other.toast
 import com.solbios.ui.adapter.UserOrderAdapter
 import com.solbios.ui.viewModel.home.UserOrderDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +51,8 @@ class UserOrderDetailsFragment : Fragment(),UserOrderAdapter.ItemClickListener {
     ): View? {
         binding=FragmentUserOrderDetailsBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 
@@ -55,11 +60,21 @@ class UserOrderDetailsFragment : Fragment(),UserOrderAdapter.ItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sessionManagement= context?.let { SessionManagement(it) }
-        viewModel.getUserOrder("Bearer"+" "+sessionManagement?.getToken(),page)
+        getUserOrder()
         setToolbar()
         startJob()
 
     }
+    fun getUserOrder(){
+        if( context?.let{ isNetworkAvailable(it) }==true) {
+            viewModel.getUserOrder("Bearer"+" "+sessionManagement?.getToken(),page)
+
+        }
+        else{
+            toast(context)
+        }
+
+        }
 
     private fun setToolbar() {
         locationTextView.text=Constants.myOrder
@@ -98,9 +113,11 @@ class UserOrderDetailsFragment : Fragment(),UserOrderAdapter.ItemClickListener {
 
     private fun setAdapter(userOrderDetailsList: List<Data>) {
       val adapter=UserOrderAdapter(userOrderDetailsList,this)
-        yourOrderRecyclerView.adapter=adapter
-        layoutManager=LinearLayoutManager(context)
-        yourOrderRecyclerView.layoutManager=layoutManager
+        if(adapter!=null) {
+            yourOrderRecyclerView.adapter = adapter
+            layoutManager = LinearLayoutManager(context)
+            yourOrderRecyclerView.layoutManager = layoutManager
+        }
     }
 
     private fun addPagination(){

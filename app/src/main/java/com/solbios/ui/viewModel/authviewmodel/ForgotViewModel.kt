@@ -6,7 +6,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.solbios.R
 import com.solbios.network.ApiState
@@ -57,12 +56,19 @@ class ForgotViewModel @Inject constructor(val forgotRepository: ForgotRepository
 
           }.catch { e->
               val error= (e as? HttpException)?.response()?.errorBody()?.string()
-              var obj = JSONObject(error)
-              var name= obj["message"]
-              _apiState.value = ApiState.Failure(e)
-              progressVisibility.set(false)
-              errorThrow.value=name.toString()
+              if (error!=null) {
 
+                  var obj = JSONObject(error)
+                  var name = obj["message"]
+                  _apiState.value = ApiState.Failure(e)
+                  progressVisibility.set(false)
+                  errorThrow.value = name.toString()
+              }
+              else{
+              errorThrow.value="You are offline. Please check your internet connection"
+                  progressVisibility.set(false)
+
+              }
           }.collect {
               progressVisibility.set(false)
 

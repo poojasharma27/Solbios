@@ -1,10 +1,12 @@
 package com.solbios.ui
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.media.audiofx.BassBoost
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -28,11 +30,9 @@ import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.solbios.databinding.ActivityMainBinding
 import com.solbios.databinding.ActivityNoInternetBinding
-import com.solbios.other.Constants
-import com.solbios.other._failure
-import com.solbios.other._success
-import com.solbios.other.isNetworkAvailable
+import com.solbios.other.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_no_internet.*
 import org.json.JSONObject
 
 
@@ -75,7 +75,6 @@ class AuthActivity : AppCompatActivity(), PaymentResultWithDataListener {
 */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (isNetworkAvailable(this)==true) {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding?.root)
             val intent = intent
@@ -86,10 +85,16 @@ class AuthActivity : AppCompatActivity(), PaymentResultWithDataListener {
             /* fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
 
         checkLocationPermission()*/
-        }else{
+    /*else{
             noBinding= ActivityNoInternetBinding.inflate(layoutInflater)
             setContentView(noBinding?.root)
-        }
+            Toast.makeText(this,"you are offline.Please check your Internet connection ",Toast.LENGTH_LONG).show()
+            tryAgain.setOnClickListener {
+               val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                 val netInfo = cm.getActiveNetworkInfo()
+            }
+
+        }*/
     }
 
 /*
@@ -166,8 +171,8 @@ class AuthActivity : AppCompatActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
-        var obj = JSONObject(p1)
-        var errorObj= obj["error"].toString()
+        val obj = JSONObject(p1)
+        val errorObj= obj["error"].toString()
         var codeObj=JSONObject(errorObj)
         var reasonString=codeObj["reason"].toString()
         var codeValue=codeObj["metadata"].toString()

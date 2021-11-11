@@ -120,12 +120,25 @@
         <action
             android:id="@+id/action_cartFragment_to_selectAddressFragment"
             app:destination="@id/selectAddressFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="couponCode"
+            app:argType="com.solbios.model.cart.applycoupon.CouponData"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
     </fragment>
     <fragment
         android:id="@+id/applyCouponFragment"
         android:name="com.solbios.ui.fragment.cart.applyCoupon.ApplyCouponFragment"
         android:label="ApplyCouponFragment" >
 
+
+        <action
+            android:id="@+id/action_applyCouponFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
         <argument
             android:name="toBePaid"
             app:argType="integer" />

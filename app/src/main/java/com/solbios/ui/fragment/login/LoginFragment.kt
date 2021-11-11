@@ -21,7 +21,10 @@ import com.solbios.model.LoginData
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
 import com.solbios.other.Constants.Enter_password
+import com.solbios.other.Constants.noInternet
 import com.solbios.other.Constants.password
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
 import com.solbios.ui.viewModel.authviewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -44,13 +47,20 @@ private var binding:FragmentLoginBinding?=null
     ): View? {
         binding= FragmentLoginBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         changeTextSpannable()
 
         validation()
         errorThrow()
 
         sessionManagement= context?.let { SessionManagement(it) }!!
-        startJob()
+        if( context?.let{isNetworkAvailable(it)}==true) {
+            startJob()
+        }
+        else{
+            Toast.makeText(context, noInternet,Toast.LENGTH_LONG).show()
+        }
         return binding?.root
     }
 

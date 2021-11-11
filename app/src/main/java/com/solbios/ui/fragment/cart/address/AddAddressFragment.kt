@@ -16,6 +16,9 @@ import com.solbios.model.addAddress.AddAddressRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
 import com.solbios.other.Constants.addAddress
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
+import com.solbios.other.toast
 import com.solbios.ui.viewModel.home.address.AddAddressViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_address.*
@@ -41,6 +44,7 @@ class AddAddressFragment :  Fragment() {
     ): View? {
         binding= FragmentAddAddressBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
 
         return binding?.root
     }
@@ -55,8 +59,14 @@ class AddAddressFragment :  Fragment() {
         viewModel.userAddressDetails("Bearer"+" "+sessionManagement?.getToken())
 
         saveButton.setOnClickListener {
-            setRadioGroup()
-            viewModel.setAddress(it,"Bearer"+" "+sessionManagement?.getToken(),addressType)
+            if( context?.let{ isNetworkAvailable(it) }==true) {
+                setRadioGroup()
+                viewModel.setAddress(it, "Bearer" + " " + sessionManagement?.getToken(), addressType)
+            }
+            else{
+                toast(context)
+            }
+
         }
 
     }

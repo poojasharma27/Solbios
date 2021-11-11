@@ -18,16 +18,21 @@ import android.content.DialogInterface
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.solbios.R
 import com.solbios.databinding.FragmentCartBinding
 import com.solbios.model.cart.deleteCartItem.DeleteCartItem
 import com.solbios.other.Constants
+import com.solbios.other.Constants.noInternet
+import com.solbios.other.internetCheck
+import com.solbios.other.isNetworkAvailable
 import kotlinx.android.synthetic.main.layout_toolbar_with_search.*
 import kotlinx.android.synthetic.main.layout_toolbar_without_cart.*
 import kotlinx.coroutines.Job
@@ -41,9 +46,10 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
    private  val viewModel:CartViewModel by viewModels()
     var sessionManagement: SessionManagement?=null
     val cartList= mutableListOf<Data>()
-    var total = 0;
+    var total = 0.0
     var adapter:CartAdapter?=null
     var taxAmount=0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,6 +57,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
     ): View? {
         binding= FragmentCartBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 
@@ -61,7 +69,6 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         viewModel.getCartItem("Bearer"+" "+sessionManagement?.getToken())
         startJob()
         setToolbar()
-
           startDeleteItemJob()
     }
 
@@ -75,14 +82,61 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         }
 
         searchImageViewCart.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_cartFragment_to_searchFragment)
         }
         applyRelativeLayout.setOnClickListener {
-            Navigation.findNavController(it).navigate(CartFragmentDirections.actionCartFragmentToApplyCouponFragment(total))
+            Navigation.findNavController(it).navigate(CartFragmentDirections.actionCartFragmentToApplyCouponFragment(total.toInt()))
         }
 
         checkoutTextView.setOnClickListener {
-            val action =CartFragmentDirections.actionCartFragmentToSelectAddressFragment()
-            it.findNavController().navigate(action)
+            if (context?.let { it1 -> isNetworkAvailable(it1) } ==true) {
+                val action = CartFragmentDirections.actionCartFragmentToSelectAddressFragment()
+                it.findNavController().navigate(action)
+            }else{
+                Toast.makeText(context,noInternet,Toast.LENGTH_LONG).show()
+            }
+        }
+        couponCodeRemoveTextView.setOnClickListener {
+            viewModel.couponCode?.discount_amount=0.0
+            viewModel.couponCode?.coupon_id=0
+            viewModel.couponCode?.total_discounted_amount=0.0
+            viewModel.couponCode?.coupon_code=""
+            viewModel.couponCode?.coupon_title=""
+            couponCodeTextView.visibility=View.GONE
+            couponCodeRemoveTextView.visibility=View.GONE
+            couponAmountValueTextView.text ="-" + "\u20B9" + 0
+            priceTextView.text = "\u20B9" + total
+            paidPriceTextView.text = "\u20B9" + total
+        }
+    }
+
+    private fun couponDetails(total:Double) {
+
+        if (viewModel.couponCode?.discount_amount!=null) {
+            if (total>= viewModel.couponCode?.minimum_price!!) {
+                couponAmountValueTextView.text = "-" + "\u20B9" + viewModel.couponCode?.discount_amount
+                couponCodeTextView.text="("+viewModel.couponCode?.coupon_code+")"
+                priceTextView.text = "\u20B9" + viewModel.couponCode?.discount_amount?.let { total.minus(it) }
+                paidPriceTextView.text = "\u20B9" + viewModel.couponCode?.discount_amount?.let { it1 -> total.minus(it1) }
+            }else{
+                couponAmountValueTextView.text = "-" + "\u20B9" + 0
+                priceTextView.text = "\u20B9" + total
+                paidPriceTextView.text = "\u20B9" + total
+                couponCodeTextView.visibility=View.GONE
+                couponCodeRemoveTextView.visibility=View.GONE
+                viewModel.couponCode?.discount_amount=0.0
+                viewModel.couponCode?.coupon_id=0
+                viewModel.couponCode?.total_discounted_amount=0.0
+            }
+
+        }else{
+            couponAmountValueTextView.text ="\u20B9" + 0.0
+            priceTextView.text= "\u20B9"+ total
+            paidPriceTextView.text="\u20B9"+total
+            couponCodeTextView.visibility=View.GONE
+            couponCodeRemoveTextView.visibility=View.GONE
+
+
         }
     }
 
@@ -104,7 +158,7 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
                     cartList.addAll(it.data)
                     setCartItem(cartList)
                     totalItemTextView.text = "Total Item (" + it.total.toString() + ")"
-                    total=0
+                    total=0.0
 
                     for ( i in 0 until  cartList.size){
 
@@ -114,8 +168,10 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
 
                     itemPriceTextView.text="\u20B9"+total.toString()
 
-                    priceTextView.text= "\u20B9"+total
-                    paidPriceTextView.text="\u20B9"+total
+
+                    couponDetails(total)
+
+
                 }
 
 
@@ -142,7 +198,7 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         cartJob.start()
     }
     lateinit var deleteItemJob : Job
-    fun updateDeleteItemUi(state: ApiState){
+   private fun updateDeleteItemUi(state: ApiState){
         when(state){
             ApiState.Empty -> {
 
@@ -181,16 +237,18 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),cartList[position].product_id,action)
        total= total.plus(cartList[position].get_product.sales_price)
         itemPriceTextView.text="\u20B9"+total
-        priceTextView.text= "\u20B9"+total
-        paidPriceTextView.text="\u20B9"+total
+        /*priceTextView.text= "\u20B9"+total
+        paidPriceTextView.text="\u20B9"+total*/
+        couponDetails(total)
     }
 
     override fun removeOnItem(action: Int?, position: Int) {
         viewModel.getAddToCart("Bearer"+" "+sessionManagement?.getToken(),cartList[position].product_id,action)
         total= total.minus(cartList[position].get_product.sales_price)
         itemPriceTextView.text="\u20B9"+total
-        priceTextView.text= "\u20B9"+total
-        paidPriceTextView.text="\u20B9"+total
+       /* priceTextView.text= "\u20B9"+total
+        paidPriceTextView.text="\u20B9"+total*/
+        couponDetails(total)
 
 
     }
@@ -206,10 +264,12 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
                   adapter?.notifyDataSetChanged()
                  // viewModel.getCartItem("Bearer"+" "+sessionManagement?.getToken())
                    total=total.minus(price)
-                  priceTextView.text= "\u20B9"+total
                   itemPriceTextView.text="\u20B9"+total
-                  paidPriceTextView.text="\u20B9"+total
-               //
+                 /* paidPriceTextView.text="\u20B9"+total
+                  priceTextView.text= "\u20B9"+total*/
+                  couponDetails(total)
+
+                  //
 
 
 

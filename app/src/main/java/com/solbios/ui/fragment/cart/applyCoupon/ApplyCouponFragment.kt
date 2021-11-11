@@ -18,6 +18,7 @@ import com.solbios.model.cart.applycoupon.ApplyCouponRoot
 import com.solbios.model.cart.applycoupon.CouponRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
+import com.solbios.other.internetCheck
 import com.solbios.ui.adapter.ApplyCouponAdapter
 import com.solbios.ui.viewModel.home.cart.ApplyCouponViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,8 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
     ): View? {
        binding= FragmentApplyCouponBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
     }
 
@@ -60,7 +63,7 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
     applyCouponTextView.setOnClickListener {
         var search=searchViewEditText.text.toString()
         if (search!=""){
-            viewModel.getCoupon("Bearer"+" "+sessionManagement?.getToken(),searchViewEditText.text.toString())
+            viewModel.getCoupon(it,"Bearer"+" "+sessionManagement?.getToken(),searchViewEditText.text.toString())
         }else{
            Toast.makeText(context,"Please Enter Coupon Code",Toast.LENGTH_LONG).show()
 
@@ -94,6 +97,7 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
             }
             is ApiState.Success<*> -> {
                 (state.data as? ApplyCouponRoot)?.let {
+                    applyCouponList.clear()
                     applyCouponList.addAll(it.data)
                  setApplyCoupon(applyCouponList)
 
@@ -148,7 +152,7 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
 
     }
     override fun onApplyCLickListeners(view: View, position: Int) {
-        viewModel.getCoupon("Bearer"+" "+sessionManagement?.getToken(),applyCouponList[position].coupon_code)
+        viewModel.getCoupon(view,"Bearer"+" "+sessionManagement?.getToken(),applyCouponList[position].coupon_code)
     }
 
 

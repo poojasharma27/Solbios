@@ -37,6 +37,7 @@ object Constants {
     const val reason="Reason"
     const val applyCoupon="Apply Coupon"
     const val cart="Cart"
+    const val noInternet="You are offline. Please check your internet connection"
 }
 
 

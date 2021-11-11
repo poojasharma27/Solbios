@@ -16,6 +16,7 @@ import com.solbios.interfaces.ItemClickListener
 import com.solbios.model.filter.Brand
 import com.solbios.model.filter.Category
 import com.solbios.network.ApiState
+import com.solbios.other.internetCheck
 import com.solbios.ui.adapter.FilterBrandAdapter
 import com.solbios.ui.adapter.FilterCategoryAdapter
 import com.solbios.ui.fragment.home.home.product.ProductListFragment
@@ -47,6 +48,8 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
     ): View? {
         binding= LayoutFilterBottomSheetBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         return binding?.root
 
     }
@@ -71,10 +74,13 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
         setBrand(ProductListFragment.brandList)
 
       applyTextView.setOnClickListener {
-       val brandId=brandIdList
-          val id = catId
-          callBacklistener?.onBrandsSelected(brandId.toString(),Integer.parseInt(id.toString()))
-          callBacklistener?.onCategorySelected(Integer.parseInt(id.toString()),brandId.toString())
+       val brandId=brandIdList?:""
+          val id = catId?:""
+
+          callBacklistener?.onBrandsSelected(brandId.toString(), id.toString())
+
+
+
        /*  if(catId==null){
             val brandId=brandIdList
             callBacklistener?.onBrandsSelected(brandId.toString())
@@ -214,7 +220,7 @@ class FilterBottomSheetDialogFragment(private  var callBacklistener: CallbackLis
 
 
     interface CallbackListener {
-        fun onBrandsSelected(brandIdList: String,catIdList: Int)
+        fun onBrandsSelected(brandIdList: String,catIdList: String)
         fun onCategorySelected(catIdList: Int,brandIdList: String)
     }
 

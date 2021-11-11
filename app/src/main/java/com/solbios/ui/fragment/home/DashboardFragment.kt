@@ -2,6 +2,7 @@ package com.solbios.ui.fragment.home
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -9,7 +10,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.solbios.R
+import com.solbios.databinding.ActivityNoInternetBinding
 import com.solbios.databinding.FragmentDashboardBinding
+import com.solbios.other.isNetworkAvailable
 import com.solbios.ui.viewModel.home.DashboardViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -18,19 +21,23 @@ class DashboardFragment  :  Fragment(){
 
     private var binding: FragmentDashboardBinding?=null
     private val viewModel: DashboardViewModel  by viewModels()
-  lateinit var navController:NavController
+    private var noBinding: ActivityNoInternetBinding?=null
+
+    lateinit var navController:NavController
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentDashboardBinding.inflate(layoutInflater)
-        binding?.viewModel=viewModel
-        return binding?.root
+            binding = FragmentDashboardBinding.inflate(layoutInflater)
+            binding?.viewModel = viewModel
+            return binding?.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
        setUpNavigation()
         bottomNavigationController()
 

@@ -201,19 +201,38 @@
                    android:textSize="@dimen/textSize14"
                    android:textStyle="normal" />
                <TextView
-                   android:id="@+id/taxAmountTextView"
-                   android:layout_width="match_parent"
+                   android:id="@+id/couponAmountTextView"
+                   android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_below="@id/priceDiscountTextView"
                    android:layout_marginStart="@dimen/margin16"
                    android:layout_marginTop="@dimen/margin8"
                    android:fontFamily="@font/p_regular"
-                   android:text="@string/tax_amount"
-                   android:visibility="gone"
+                   android:text="@string/coupon_discount"
                    android:textSize="@dimen/textSize14" />
-
                <TextView
-                   android:id="@+id/taxAmountValueTextView"
+                   android:id="@+id/couponCodeTextView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/priceDiscountTextView"
+                   android:layout_marginStart="@dimen/margin16"
+                   android:layout_marginTop="@dimen/margin8"
+                   android:fontFamily="@font/p_regular"
+                   android:text="@string/coupon_discount"
+                   android:textColor="@color/purple_500"
+                   android:layout_toEndOf="@id/couponAmountTextView"
+                   android:textSize="@dimen/textSize14" />
+               <TextView
+                   android:id="@+id/couponCodeRemoveTextView"
+                   android:layout_width="18dp"
+                   android:layout_height="18dp"
+                   android:layout_marginTop="@dimen/margin8"
+                   android:layout_marginEnd="@dimen/margin16"
+                   android:layout_below="@id/priceDiscountTextView"
+                   android:background="@drawable/ic_baseline_delete_24"
+                   android:layout_toStartOf="@id/couponAmountValueTextView"/>
+               <TextView
+                   android:id="@+id/couponAmountValueTextView"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_below="@id/priceDiscountTextView"
@@ -221,7 +240,6 @@
                    android:layout_marginTop="@dimen/margin8"
                    android:layout_marginEnd="@dimen/margin16"
                    android:text="@string/Rs1"
-                   android:visibility="gone"
                    android:textSize="@dimen/textSize14"
                    android:textStyle="normal" />
 
@@ -229,7 +247,7 @@
                    android:id="@+id/backgroundView1"
                    android:layout_width="match_parent"
                    android:layout_height="2dp"
-                   android:layout_below="@id/priceDiscountTextView"
+                   android:layout_below="@id/couponAmountTextView"
                    android:layout_marginStart="@dimen/margin16"
                    android:layout_marginTop="@dimen/margin8"
                    android:layout_marginEnd="@dimen/margin16"

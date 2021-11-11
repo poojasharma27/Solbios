@@ -25,6 +25,7 @@ import com.solbios.other.Constants.email
 import com.solbios.other.Constants.mobileNumber
 import com.solbios.other.Constants.name
 import com.solbios.other.Constants.password
+import com.solbios.other.internetCheck
 import com.solbios.ui.viewModel.authviewmodel.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -47,6 +48,8 @@ class RegisterFragment : Fragment() {
         binding= FragmentRegisterBinding.inflate(layoutInflater)
         viewModel= ViewModelProvider(this).get(SignUpViewModel::class.java)
         binding?.viewModel=viewModel
+        internetCheck(context)
+
         validation()
 
         errorThrow()

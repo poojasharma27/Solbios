@@ -141,11 +141,13 @@
     <string name="recent_searches">Recent searches</string>
     <string name="clear_all">Clear All</string>
     <string name="go_to_cart">Go to cart</string>
-    <string name="trendn_gproducts">Trending products</string>
+    <string name="trending_products">Trending products</string>
     <string name="payment_type">Payment Type</string>
     <string name="transaction_id">Transaction Id</string>
     <string name="tax_amount">Tax Amount</string>
     <string name="again">Try Again</string>
     <string name="no_internet_please_try_again">no Internet Please try Again</string>
+    <string name="enter_coupon_code">Enter coupon code</string>
+    <string name="bearer">Bearer</string>
 
 </resources>
