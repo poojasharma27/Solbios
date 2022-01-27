@@ -1,8 +1,11 @@
 package com.solbios.ui.viewModel.home.address
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.solbios.db.entities.CouponDetails
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.network.ApiState
 import com.solbios.ui.fragment.cart.address.SelectAddressRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,10 +14,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectAddressViewModel @Inject constructor(val repository: SelectAddressRepository)  :ViewModel() {
+class SelectAddressViewModel @Inject constructor(val repository: SelectAddressRepository, val stateHandle: SavedStateHandle)  :ViewModel() {
 
     var progressVisibility = ObservableField(false)
     var noDataItemVisibility = ObservableField(false)
+    var couponCode=stateHandle.get<CouponData>("couponCode")
 
     private val _apiState= MutableStateFlow<ApiState>(ApiState.Empty)
     val apiState: StateFlow<ApiState> by lazy {

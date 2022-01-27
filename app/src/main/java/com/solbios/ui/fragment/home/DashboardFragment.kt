@@ -37,12 +37,8 @@ class DashboardFragment  :  Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-       setUpNavigation()
+        setUpNavigation()
         bottomNavigationController()
-
-
-
 
     }
 
@@ -130,6 +126,7 @@ class DashboardFragment  :  Fragment(){
                 R.id.orderDetailsFragment->{
                     activity_main_bottom_navigation_view.visibility=View.GONE
                 }
+
                 else -> {activity_main_bottom_navigation_view.visibility =
                     View.VISIBLE}
 

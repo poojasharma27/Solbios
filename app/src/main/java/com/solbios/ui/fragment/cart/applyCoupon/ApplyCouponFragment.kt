@@ -13,8 +13,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.firstapp.sharedPreference.SessionManagement
 import com.solbios.databinding.FragmentApplyCouponBinding
+import com.solbios.db.AppDataBase
+import com.solbios.db.entities.CouponDetails
+import com.solbios.db.entities.SearchData
 import com.solbios.model.cart.applycoupon.ApplyCouponData
 import com.solbios.model.cart.applycoupon.ApplyCouponRoot
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.model.cart.applycoupon.CouponRoot
 import com.solbios.network.ApiState
 import com.solbios.other.Constants
@@ -24,6 +28,8 @@ import com.solbios.ui.viewModel.home.cart.ApplyCouponViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_apply_coupon.*
 import kotlinx.android.synthetic.main.layout_toolbar_name.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -54,7 +60,6 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
         viewModel.getApplyCoupon("Bearer"+" "+sessionManagement?.getToken())
         startJob()
         setToolBar()
-        startCouponJob()
         errorThrow()
         applyForSearch()
     }
@@ -63,6 +68,7 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
     applyCouponTextView.setOnClickListener {
         var search=searchViewEditText.text.toString()
         if (search!=""){
+            startCouponJob()
             viewModel.getCoupon(it,"Bearer"+" "+sessionManagement?.getToken(),searchViewEditText.text.toString())
         }else{
            Toast.makeText(context,"Please Enter Coupon Code",Toast.LENGTH_LONG).show()
@@ -70,6 +76,8 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
         }
     }
     }
+
+
 
     private fun setToolBar() {
         backImageView.setOnClickListener {
@@ -136,12 +144,38 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
             is ApiState.Success<*> -> {
                 (state.data as? CouponRoot)?.let {
                     Log.e("coupon",it.data.discount_amount.toString())
+                   applyCouponDb(it.data)
                 }
 
 
             }
 
         }
+    }
+
+    private fun applyCouponDb(it:CouponData ) {
+        CoroutineScope(Dispatchers.Main).launch {
+            context?.let {
+                AppDataBase.invoke(it)?.searchDetailsDao()?.deleteAllCoupon()
+            }
+        }
+        val applyEntity = CouponDetails(
+           it.discount_amount,
+            it.total_discounted_amount,
+            it.coupon_id,
+            it.coupon_title,
+            it.coupon_code,
+            it.minimum_price
+        )
+        CoroutineScope(Dispatchers.Main).launch {
+            context?.let {
+                val couponDataEntity = AppDataBase.invoke(it)?.searchDetailsDao()
+                    ?.couponAddDetails(applyEntity)
+
+                Log.d("couponDataEntity", couponDataEntity.toString())
+            }
+        }
+
     }
     private fun startCouponJob(){
         couponJob=lifecycleScope.launch {
@@ -152,6 +186,7 @@ class ApplyCouponFragment  : Fragment() ,ApplyCouponAdapter.OnApplyClickListener
 
     }
     override fun onApplyCLickListeners(view: View, position: Int) {
+        startCouponJob()
         viewModel.getCoupon(view,"Bearer"+" "+sessionManagement?.getToken(),applyCouponList[position].coupon_code)
     }
 

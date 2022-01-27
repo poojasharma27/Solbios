@@ -81,8 +81,7 @@ class SelectAddressFragment : Fragment(),SelectAddressAdapter.OnItemClickListene
 
                 } else {
                     val id = selectAddressList[addressPosition!!].id
-                    Navigation.findNavController(it).navigate(SelectAddressFragmentDirections.actionSelectAddressFragmentToOrderSummaryFragment(id)
-                    )
+                    Navigation.findNavController(it).navigate(SelectAddressFragmentDirections.actionSelectAddressFragmentToOrderSummaryFragment(id,viewModel.couponCode))
 
                 }
             }
@@ -116,12 +115,20 @@ class SelectAddressFragment : Fragment(),SelectAddressAdapter.OnItemClickListene
                     selectAddressList.clear()
                     selectAddressList.addAll(it.data)
                     setSelectAddress(selectAddressList)
-                    priceTextView.text="\u20B9"+it.total_final_price.toString()
+                    setPrice(it)
                 }
 
 
             }
 
+        }
+    }
+
+    private fun setPrice(it: SelectAddressRoot) {
+        if (viewModel.couponCode?.discount_amount!=null) {
+            priceTextView.text = "\u20B9" + viewModel.couponCode?.discount_amount?.let { it1 -> it.total_final_price.minus(it1) }
+        }else{
+            priceTextView.text = "\u20B9" +it.total_final_price
         }
     }
 

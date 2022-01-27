@@ -4,6 +4,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.solbios.db.entities.CouponDetails
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.network.ApiState
 import com.solbios.ui.fragment.cart.orderSummary.OrderSummaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,7 @@ class OrderSummaryViewModel @Inject constructor(val repository: OrderSummaryRepo
     }
     var progressVisibility = ObservableField(false)
     var screenVisibility = ObservableField(false)
+    var couponCode=stateHandle.get<CouponData>("couponCode")
 
 
     fun orderSummary(header:String){

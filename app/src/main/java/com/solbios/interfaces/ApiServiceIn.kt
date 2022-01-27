@@ -99,5 +99,5 @@ interface ApiServiceIn {
     suspend fun deleteAddress(@Header ("Authorization") token:String?,@Query("id") id:Int?):DeleteAddressRoot
 
      @POST("create_order")
-     suspend fun createOrderId(@Header("Authorization") token:String?,@Query("amount") amount: String?,@Query("address_id") addressId:Int?,@Query("order_id") orderId:String?,@Query("payment_type") paymentType:Int?,@Query("transaction_id") transtionId:String?,@Query("status") status:Int?,@Query("reason") reason:String?,@Query("tax_amount") taxAmount:String?):CreateOrderIdRoot
+     suspend fun createOrderId(@Header("Authorization") token:String?,@Query("amount") amount: String?,@Query("address_id") addressId:Int?,@Query("order_id") orderId:String?,@Query("payment_type") paymentType:Int?,@Query("transaction_id") transtionId:String?,@Query("status") status:Int?,@Query("reason") reason:String?,@Query("tax_amount") taxAmount:String?,@Query("coupon_id") couponid:String?,@Query("discount_amount") discountAmount:Double?):CreateOrderIdRoot
 }

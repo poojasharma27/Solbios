@@ -15,8 +15,20 @@ class PaymentRepository  @Inject constructor( val  apiServiceIn: ApiServiceIn) {
 
     }.flowOn(Dispatchers.IO)
 
-    suspend fun createOrderId(header:String?,amount:String?,addressId:Int?,orderId:String?,paymentType:Int?,transationId:String?,status:Int?,reason:String?,taxAmount:String?)= flow<CreateOrderIdRoot> {
-        emit(apiServiceIn.createOrderId(header,amount,addressId,orderId,paymentType,transationId,status,reason,taxAmount))
+    suspend fun createOrderId(
+        header: String?,
+        amount: String?,
+        addressId: Int?,
+        orderId: String?,
+        paymentType: Int?,
+        transationId: String?,
+        status: Int?,
+        reason: String?,
+        taxAmount: String?,
+        couponId: String?,
+        discountAmount:Double?
+    )= flow<CreateOrderIdRoot> {
+        emit(apiServiceIn.createOrderId(header,amount,addressId,orderId,paymentType,transationId,status,reason,taxAmount,couponId,discountAmount))
 
     }.flowOn(Dispatchers.IO)
 }

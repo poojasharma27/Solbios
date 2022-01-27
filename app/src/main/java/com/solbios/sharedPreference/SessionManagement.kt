@@ -16,8 +16,7 @@ class SessionManagement(context: Context) {
         val mainKey = MasterKey.Builder(context)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
-        EncryptedSharedPreferences.create(
-            context, // fileName,
+        EncryptedSharedPreferences.create(context, // fileName,
             "",
             mainKey, // masterKeyAlias
             // context

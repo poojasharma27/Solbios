@@ -125,8 +125,8 @@
             android:drawablePadding="@dimen/margin5"
             android:gravity="center"
             android:layout_toEndOf="@id/AmountTextView"
-            android:text="@{@string/Rs+String.valueOf(viewModel.total_amount)}" />
-
+            android:text="" />
+       <!-- @{@string/Rs+String.valueOf(viewModel.total_amount)-->
         <TextView
             android:id="@+id/tabletQuantityTextView"
             android:layout_width="wrap_content"

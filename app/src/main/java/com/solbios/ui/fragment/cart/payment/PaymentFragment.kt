@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.layout_toolbar_name.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.firstapp.sharedPreference.SessionManagement
+import com.solbios.R
 import com.solbios.databinding.FragmentPaymentBinding
 import com.solbios.model.orderId.OrderIdRoot
 import com.solbios.model.paymentCreateOrder.CreateOrderIdRoot
@@ -101,7 +102,18 @@ class PaymentFragment : Fragment() {
         discountPriceTextView.text="_"+"\u20B9"+args.priceDiscount
         paidPricesTextView.text="\u20B9"+args.toBePaid.plus(args.taxAmount)
         taxValueTextView.text="+"+"\u20B9"+args.taxAmount
+         setCouponAmount()
+    }
 
+    private fun setCouponAmount() {
+        if (viewModel.couponCode?.discount_amount!=null){
+            couponAmountValueTextView.text=getString(R.string.Rs)+viewModel.couponCode?.discount_amount
+            couponCodeTextView.text="("+viewModel.couponCode?.coupon_code+")"
+        }else{
+            couponAmountValueTextView.visibility=View.GONE
+            couponCodeTextView.visibility=View.GONE
+            couponAmountTextView.visibility=View.GONE
+        }
     }
 
 

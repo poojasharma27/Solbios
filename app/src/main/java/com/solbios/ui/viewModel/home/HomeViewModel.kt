@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(val repository: HomeRepository):ViewModel() {
+class HomeViewModel @Inject constructor(val repository: HomeRepository): ViewModel() {
 
     var progressVisibility = ObservableField(false)
 

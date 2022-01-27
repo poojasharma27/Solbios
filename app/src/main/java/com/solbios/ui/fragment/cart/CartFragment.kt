@@ -28,6 +28,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.solbios.R
 import com.solbios.databinding.FragmentCartBinding
+import com.solbios.db.AppDataBase
+import com.solbios.db.entities.CouponDetails
+import com.solbios.db.entities.SearchData
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.model.cart.deleteCartItem.DeleteCartItem
 import com.solbios.other.Constants
 import com.solbios.other.Constants.noInternet
@@ -35,6 +39,8 @@ import com.solbios.other.internetCheck
 import com.solbios.other.isNetworkAvailable
 import kotlinx.android.synthetic.main.layout_toolbar_with_search.*
 import kotlinx.android.synthetic.main.layout_toolbar_without_cart.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -49,16 +55,14 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
     var total = 0.0
     var adapter:CartAdapter?=null
     var taxAmount=0
+    private  var applyCouponEntity: CouponDetails? =null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding= FragmentCartBinding.inflate(layoutInflater)
         binding?.viewModel=viewModel
         internetCheck(context)
-
+      Log.e("tag",viewModel.couponCode?.coupon_id.toString())
         return binding?.root
     }
 
@@ -69,7 +73,7 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         viewModel.getCartItem("Bearer"+" "+sessionManagement?.getToken())
         startJob()
         setToolbar()
-          startDeleteItemJob()
+        startDeleteItemJob()
     }
 
 
@@ -90,28 +94,81 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
 
         checkoutTextView.setOnClickListener {
             if (context?.let { it1 -> isNetworkAvailable(it1) } ==true) {
-                val action = CartFragmentDirections.actionCartFragmentToSelectAddressFragment()
+               val applyCoupon: CouponData? = applyCouponEntity?.let { it1 -> from(it1) }
+                val action = CartFragmentDirections.actionCartFragmentToSelectAddressFragment(applyCoupon)
                 it.findNavController().navigate(action)
             }else{
                 Toast.makeText(context,noInternet,Toast.LENGTH_LONG).show()
             }
         }
+
         couponCodeRemoveTextView.setOnClickListener {
-            viewModel.couponCode?.discount_amount=0.0
-            viewModel.couponCode?.coupon_id=0
-            viewModel.couponCode?.total_discounted_amount=0.0
-            viewModel.couponCode?.coupon_code=""
-            viewModel.couponCode?.coupon_title=""
+            CoroutineScope(Dispatchers.Main).launch {
+                 AppDataBase.invoke(context)?.searchDetailsDao()?.deleteAllCoupon()
+            }
+           applyCouponEntity ?.discount_amount=0.0
+            applyCouponEntity?.coupon_id=0
+            applyCouponEntity?.total_discounted_amount=0.0
+            applyCouponEntity?.coupon_code=""
+            applyCouponEntity?.coupon_title=""
             couponCodeTextView.visibility=View.GONE
             couponCodeRemoveTextView.visibility=View.GONE
+            couponAmountTextView.visibility =View.GONE
+            couponAmountValueTextView.visibility =View.GONE
             couponAmountValueTextView.text ="-" + "\u20B9" + 0
             priceTextView.text = "\u20B9" + total
             paidPriceTextView.text = "\u20B9" + total
         }
     }
 
-    private fun couponDetails(total:Double) {
+    fun from(form: CouponDetails):CouponData =
+        CouponData(
+            form.discount_amount,
+            form.total_discounted_amount,
+            form.coupon_id,
+            form.coupon_title,
+            form.coupon_code,
+            form.minimum_price
+        )
 
+    private fun applyCoupondb(total:Double){
+            CoroutineScope(Dispatchers.Main).launch {
+                 applyCouponEntity = AppDataBase.invoke(context)?.searchDetailsDao()?.getCouponDetails()
+               // val coupon=  AppDataBase.invoke(context)?.searchDetailsDao()?.getCoupon()
+                Log.d("couponDataEntity",applyCouponEntity?.coupon_id.toString())
+                if (applyCouponEntity?.discount_amount!=null) {
+                    if (total>= applyCouponEntity?.minimum_price!!) {
+                        couponAmountValueTextView.text = "-" + "\u20B9" + applyCouponEntity?.discount_amount
+                        couponCodeTextView.text="("+applyCouponEntity?.coupon_code+")"
+                        priceTextView.text = "\u20B9" + applyCouponEntity?.discount_amount?.let { total.minus(it) }
+                        paidPriceTextView.text = "\u20B9" + applyCouponEntity?.discount_amount?.let { it1 -> total.minus(it1) }
+                    }else{
+                        couponAmountValueTextView.text = "-" + "\u20B9" + 0
+                        priceTextView.text = "\u20B9" + total
+                        paidPriceTextView.text = "\u20B9" + total
+                        couponCodeTextView.visibility=View.GONE
+                        couponCodeRemoveTextView.visibility=View.GONE
+                        applyCouponEntity?.discount_amount=0.0
+                        applyCouponEntity?.coupon_id=0
+                        applyCouponEntity?.total_discounted_amount=0.0
+                    }
+
+                }else{
+                    couponAmountValueTextView.text ="\u20B9" + 0.0
+                    couponAmountTextView.visibility =View.GONE
+                    couponAmountValueTextView.visibility =View.GONE
+                    priceTextView.text= "\u20B9"+ total
+                    paidPriceTextView.text="\u20B9"+total
+                    couponCodeTextView.visibility=View.GONE
+                    couponCodeRemoveTextView.visibility=View.GONE
+
+
+                }
+            }
+
+    }
+
+    private fun couponDetails(total:Double) {
         if (viewModel.couponCode?.discount_amount!=null) {
             if (total>= viewModel.couponCode?.minimum_price!!) {
                 couponAmountValueTextView.text = "-" + "\u20B9" + viewModel.couponCode?.discount_amount
@@ -131,6 +188,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
 
         }else{
             couponAmountValueTextView.text ="\u20B9" + 0.0
+            couponAmountTextView.visibility =View.GONE
+            couponAmountValueTextView.visibility =View.GONE
             priceTextView.text= "\u20B9"+ total
             paidPriceTextView.text="\u20B9"+total
             couponCodeTextView.visibility=View.GONE
@@ -169,8 +228,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
                     itemPriceTextView.text="\u20B9"+total.toString()
 
 
-                    couponDetails(total)
-
+                   // couponDetails(total)
+                      applyCoupondb(total)
 
                 }
 
@@ -239,7 +298,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         itemPriceTextView.text="\u20B9"+total
         /*priceTextView.text= "\u20B9"+total
         paidPriceTextView.text="\u20B9"+total*/
-        couponDetails(total)
+       // couponDetails(total)
+        applyCoupondb(total)
     }
 
     override fun removeOnItem(action: Int?, position: Int) {
@@ -248,7 +308,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
         itemPriceTextView.text="\u20B9"+total
        /* priceTextView.text= "\u20B9"+total
         paidPriceTextView.text="\u20B9"+total*/
-        couponDetails(total)
+     //   couponDetails(total)
+        applyCoupondb(total)
 
 
     }
@@ -267,7 +328,8 @@ class CartFragment : Fragment(),CartAdapter.ItemClickListener {
                   itemPriceTextView.text="\u20B9"+total
                  /* paidPriceTextView.text="\u20B9"+total
                   priceTextView.text= "\u20B9"+total*/
-                  couponDetails(total)
+                 // couponDetails(total)
+                  applyCoupondb(total)
 
                   //
 

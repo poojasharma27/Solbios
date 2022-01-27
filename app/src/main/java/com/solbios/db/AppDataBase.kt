@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.solbios.db.entities.CouponDetails
 import com.solbios.db.entities.SearchData
 import com.solbios.db.entities.SearchEntityRoot
 
-@Database(entities = arrayOf(SearchData::class),version = 2)
+@Database(entities = arrayOf(SearchData::class,CouponDetails::class),version = 3)
 abstract class  AppDataBase : RoomDatabase() {
 
     abstract fun searchDetailsDao() : SearchDetailsDao

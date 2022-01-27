@@ -35,7 +35,7 @@ class OrderSummaryFragment : Fragment() {
     private  val viewModel:OrderSummaryViewModel by viewModels()
    private var sessionManagement: SessionManagement?=null
     var itemTotalPrice:String=" "
-    var toBePaidPrice:Int=0
+    var toBePaidPrice:Double=0.0
     var taxAmount:Int=0
     var priceDiscount:String=" "
     override fun onCreateView(
@@ -46,7 +46,6 @@ class OrderSummaryFragment : Fragment() {
          binding= FragmentOrderSummaryBinding.inflate(layoutInflater)
           binding?.viewModel=viewModel
         internetCheck(context)
-
         return binding?.root
     }
 
@@ -77,7 +76,7 @@ class OrderSummaryFragment : Fragment() {
         confirmTextView.setOnClickListener {
             if( context?.let{ isNetworkAvailable(it) }==true) {
                 val addressId: Int = viewModel.id!!
-                Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId, itemTotalPrice, priceDiscount, toBePaidPrice, taxAmount))
+                Navigation.findNavController(it).navigate(OrderSummaryFragmentDirections.actionOrderSummaryFragmentToPaymentFragment(addressId, itemTotalPrice, priceDiscount, toBePaidPrice.toFloat(), taxAmount,viewModel.couponCode))
             }else{
                 toast(context)
             }
@@ -106,7 +105,8 @@ class OrderSummaryFragment : Fragment() {
                    setAddres(it)
                     setAdapter(it.data.cart_data)
                 itemTotalPrice=it.totalRealPrice.toString()
-                toBePaidPrice=it.totalFinalPrice
+                    setToBePaid(it)
+
                 taxAmount=it.tax_amount
                 priceDiscount=it.totalRealPrice.minus(it.totalFinalPrice).toString()
                     //taxAmountValueTextView.text=it.tax_amount.toString()
@@ -115,6 +115,24 @@ class OrderSummaryFragment : Fragment() {
 
             }
         }
+    }
+
+    private fun setToBePaid(it: OrderSummaryRoot) {
+        if (viewModel.couponCode?.discount_amount!=null){
+            toBePaidPrice= it.totalFinalPrice.toDouble().minus(viewModel.couponCode?.discount_amount!!)
+            pricesTextView.text= "\u20B9"+viewModel.couponCode?.discount_amount?.let { it1 -> it.totalFinalPrice.plus(it.tax_amount).minus(it1) }
+            paidPricesTextView.text="\u20B9"+ viewModel.couponCode?.discount_amount?.let { it1 -> it.totalFinalPrice.plus(it.tax_amount).minus(it1) }
+            couponCodeAmountTextView.text="-"+"\u20B9"+viewModel.couponCode?.discount_amount
+            couponCodeValueTextView.text="("+viewModel.couponCode?.coupon_code+")"
+        }else{
+            toBePaidPrice= it.totalFinalPrice.toDouble()
+            pricesTextView.text= "\u20B9"+ it.totalFinalPrice.plus(it.tax_amount)
+            paidPricesTextView.text="\u20B9"+   it.totalFinalPrice.plus(it.tax_amount)
+            couponCodeAmountTextView.visibility=View.GONE
+            couponCodeValueTextView.visibility=View.GONE
+            couponTextView.visibility=View.GONE
+
+            }
     }
 
     private fun setAdapter(cartData: List<CartData>) {
@@ -130,8 +148,7 @@ class OrderSummaryFragment : Fragment() {
         stateTextView.text=it.data.delivery_address.state
         numberTextView.text= it.data.delivery_address.contact_number.toString()
         itemPricesTextView.text= "\u20B9"+it.totalRealPrice.toString()
-        pricesTextView.text= "\u20B9"+it.totalFinalPrice.plus(it.tax_amount)
-        paidPricesTextView.text="\u20B9"+ it.totalFinalPrice.plus(it.tax_amount)
+
         discountPriceTextView.text="_"+"\u20B9"+it.totalRealPrice.minus(it.totalFinalPrice).toString()
         taxValueTextView.text="+"+"\u20B9"+it.tax_amount.toString()
 

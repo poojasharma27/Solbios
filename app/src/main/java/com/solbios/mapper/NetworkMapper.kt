@@ -1,6 +1,8 @@
 package com.solbios.mapper
 
+import com.solbios.db.entities.CouponDetails
 import com.solbios.db.entities.SearchData
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.model.search.Data
 
 
@@ -20,4 +22,16 @@ fun Data.toSearchDataEntity() : SearchData {
 
      )
     return searchData
+}
+
+fun CouponData.toCouponData():CouponDetails{
+   val couponData=CouponDetails(
+       this .discount_amount,
+    this. total_discounted_amount,
+     this. coupon_id,
+     this. coupon_title,
+     this. coupon_code,
+       this. minimum_price
+   )
+    return couponData
 }

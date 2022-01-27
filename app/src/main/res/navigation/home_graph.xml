@@ -5,7 +5,10 @@
     app:startDestination="@id/homeFragment">
 
     <include app:graph="@navigation/auth_graph" />
-
+   <!-- <fragment
+        android:id="@+id/homeContainerFragment"
+        android:name="com.solbios.ui.fragment.home.home.HomeContainerFragment"
+        android:label="HomeContainerFragment"/>-->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.solbios.ui.fragment.home.home.HomeFragment"
@@ -156,6 +159,11 @@
        <!-- <argument
             android:name="price"
             app:argType="integer" />-->
+        <argument
+            android:name="couponCode"
+            app:argType="com.solbios.model.cart.applycoupon.CouponData"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/addAddressFragment"
@@ -178,6 +186,11 @@
             android:name="id"
             app:argType="integer"
             />
+        <argument
+            android:name="couponCode"
+            app:argType="com.solbios.model.cart.applycoupon.CouponData"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_orderSummaryFragment_to_selectAddressFragment"
             app:destination="@id/selectAddressFragment" />
@@ -200,10 +213,15 @@
             app:argType="string" />
         <argument
             android:name="toBePaid"
-            app:argType="integer" />
+            app:argType="float" />
         <argument
             android:name="taxAmount"
             app:argType="integer" />
+        <argument
+            android:name="couponCode"
+            app:argType="com.solbios.model.cart.applycoupon.CouponData"
+            app:nullable="true"
+            android:defaultValue="@null" />
 
         <action
             android:id="@+id/action_paymentFragment_to_paymentSuccessFragment"
@@ -211,6 +229,7 @@
         <action
             android:id="@+id/action_paymentFragment_to_paymentFailureFragment"
             app:destination="@id/paymentFailureFragment" />
+
 
     </fragment>
     <fragment

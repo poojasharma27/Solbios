@@ -46,11 +46,11 @@
             android:id="@+id/couponCodeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/coupon_code"
             android:layout_below="@id/titileTextView"
             android:layout_marginStart="@dimen/margin16"
             android:layout_marginTop="@dimen/margin8"
-            android:fontFamily="@font/p_bold" />
+            android:fontFamily="@font/p_bold"
+            android:text="@string/coupon_code" />
 
         <TextView
             android:id="@+id/codeTextView"

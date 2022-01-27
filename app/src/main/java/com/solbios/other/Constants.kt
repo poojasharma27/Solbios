@@ -45,3 +45,6 @@ var _success  = MutableLiveData<Bundle>()
 var Success : LiveData<Bundle>  = _success
 var _failure  = MutableLiveData<Bundle>()
 var Failure : LiveData<Bundle>  = _failure
+
+var _address  = MutableLiveData<String>()
+var _Address : LiveData<String>  = _address

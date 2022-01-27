@@ -2,10 +2,13 @@ package com.solbios.ui.viewModel.home.payment
 
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.Navigation
 import com.solbios.R
+import com.solbios.db.entities.CouponDetails
+import com.solbios.model.cart.applycoupon.CouponData
 import com.solbios.model.paymentCreateOrder.CreateOrderIdRoot
 import com.solbios.network.ApiState
 import com.solbios.ui.fragment.cart.payment.PaymentFragmentDirections
@@ -15,7 +18,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
-class PaymentViewModel @Inject constructor( val repository: PaymentRepository):ViewModel() {
+class PaymentViewModel @Inject constructor( val repository: PaymentRepository,val stateHandle: SavedStateHandle):ViewModel() {
     var progressVisibility = ObservableField(false)
 
     private val _apiState= MutableStateFlow<ApiState>(ApiState.Empty)
@@ -26,7 +29,9 @@ class PaymentViewModel @Inject constructor( val repository: PaymentRepository):V
     val apiStateOrderId: StateFlow<ApiState> by lazy {
         _apiStateOrderId
     }
-        fun getOrderId(header:String?,amount:String?,taxAmount:String?){
+    var couponCode=stateHandle.get<CouponData>("couponCode")
+
+    fun getOrderId(header:String?,amount:String?,taxAmount:String?){
         viewModelScope.launch {
             repository.getOrderId(header,amount,taxAmount).onStart {
                 _apiState.value=ApiState.Loading
@@ -47,7 +52,7 @@ class PaymentViewModel @Inject constructor( val repository: PaymentRepository):V
 
     fun createOrderId(view: View, header: String?, amount: String?, addressId:Int?, orderId:String?, paymentType:Int?, transactionId:String?,status:Int?,reason:String?,taxAmount:String?){
         viewModelScope.launch {
-            repository.createOrderId(header,amount,addressId,orderId,paymentType,transactionId,status,reason,taxAmount).onStart {
+            repository.createOrderId(header,amount,addressId,orderId,paymentType,transactionId,status,reason,taxAmount,couponCode?.coupon_id.toString(),couponCode?.discount_amount).onStart {
                 _apiStateOrderId.value=ApiState.Loading
                 progressVisibility.set(true)
 
